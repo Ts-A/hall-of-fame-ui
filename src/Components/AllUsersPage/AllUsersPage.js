@@ -1,5 +1,6 @@
 //import axios from "axios";
 import React from "react";
+import "./AllUsersPage.css";
 
 class AllUsersPage extends React.Component {
   constructor(props) {
@@ -14,10 +15,9 @@ class AllUsersPage extends React.Component {
   
   render() {
     return (
-      <div>
-        <p>Hello there! This is the All User Page.</p>
-      </div>
-    );
+      <div> 
+        <p>This is the AllUsersPage. Welcome!</p>
+      </div> )
   }
 }
 export default AllUsersPage;
