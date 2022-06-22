@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useState} from 'react';
 import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
 import CameraIcon from '@mui/icons-material/PhotoCamera';
@@ -15,6 +15,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Link from '@mui/material/Link';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Avatar from '@mui/material/Avatar';
 
 function Copyright() {
   return (
@@ -30,20 +31,42 @@ function Copyright() {
 }
 
 const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-
+const usernames = ["abcd", "efgh", "idjk", "abcd", "efgh", "idjk","abcd", "efgh", "idjk"]
 const theme = createTheme();
 
 export default function Album() {
+
+  const [username, setUsername] = useState("Aditya");
+
+  function changeUsername() {
+    setUsername("Amritansh");
+  }
+ 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <AppBar position="relative">
         <Toolbar>
-          <CameraIcon sx={{ mr: 2 }} />
           <Typography variant="h6" color="inherit" noWrap>
-            Album layout
+            Hall of Fame
           </Typography>
+          
+          <Box
+            m={1}
+            display="flex"
+            justifyContent="flex-end"
+            alignItems="flex-end"
+            
+           >
+            <Button variant="contained" color="primary" sx={{ height: 40 }}>
+            Logout
+            </Button>
+            
+          </Box>
+      
+         
         </Toolbar>
+       
       </AppBar>
       <main>
         {/* Hero unit */}
@@ -80,15 +103,15 @@ export default function Album() {
             </Stack>
           </Container>
         </Box>
-        <Container sx={{ py: 8 }} maxWidth="md">
+        <Container sx={{ py: 10 }} maxWidth="md">
           {/* End hero unit */}
-          <Grid container spacing={4}>
+          <Grid container spacing={10}>
             {cards.map((card) => (
               <Grid item key={card} xs={12} sm={6} md={4}>
                 <Card
-                  sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
+                  sx={{ height: '400px', width: '350px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}
                 >
-                  <CardMedia
+                  {/* <CardMedia
                     component="img"
                     sx={{
                       // 16:9
@@ -96,10 +119,11 @@ export default function Album() {
                     }}
                     image="https://source.unsplash.com/random"
                     alt="random"
-                  />
+                  /> */}
+                  <Avatar sx={{ width: 150, height: 150 }} alt="Remy Sharp" src="https://source.unsplash.com/random" />
                   <CardContent sx={{ flexGrow: 1 }}>
                     <Typography gutterBottom variant="h5" component="h2">
-                      Heading
+                      {username}
                     </Typography>
                     <Typography>
                       This is a media card. You can use this section to describe the
@@ -108,7 +132,7 @@ export default function Album() {
                   </CardContent>
                   <CardActions>
                     <Button size="small">View</Button>
-                    <Button size="small">Edit</Button>
+                    
                   </CardActions>
                 </Card>
               </Grid>
