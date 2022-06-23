@@ -1,4 +1,5 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
+import ReactDOM from 'react-dom/client';
 import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
 import CameraIcon from '@mui/icons-material/PhotoCamera';
@@ -44,6 +45,8 @@ export default function Album() {
   const [users, setUsers] = useState(tempUsers);
   const [token, setToken] = useState("");
   const [navigateToNewUser, setNavigateToNewUser] = useState(false);
+  const usersContainer = useRef(null);
+
   function getUsers() {
     axios
       .get(URL + "users", {
@@ -63,8 +66,10 @@ export default function Album() {
   }
   function goToLandingPage(){
     navigate("/");
+  } 
+  function focusOnusersContainer() {
+    usersContainer.current.focus();
   }
-
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -82,7 +87,7 @@ export default function Album() {
             alignItems="flex-end"
             
            >
-            <Button onClick={() => {}}  variant="contained" color="primary" sx={{ height: 40 }}>
+            <Button onClick={() => { goToLandingPage()}}  variant="contained" color="primary" sx={{ height: 40 }}>
             Logout
             </Button>
             
@@ -123,11 +128,11 @@ export default function Album() {
               justifyContent="center"
             >
               <Button variant="contained">Ready to answer some questions?</Button>
-              <Button variant="outlined">Secondary action</Button>
+              <Button onClick={() => {focusOnusersContainer()}} variant="outlined">I am scared. Let's see some examples, shall we?</Button>
             </Stack>
           </Container>
         </Box>
-        <Container sx={{ py: 10 }} maxWidth="md">
+        <Container ref= {usersContainer} sx={{ py: 10 }} maxWidth="md">
           {/* End hero unit */}
           <Grid container spacing={10}>
             {users.map((user, index) => (
