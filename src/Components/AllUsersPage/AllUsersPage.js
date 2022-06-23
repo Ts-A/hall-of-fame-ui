@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
 import CameraIcon from '@mui/icons-material/PhotoCamera';
@@ -16,13 +16,17 @@ import Container from '@mui/material/Container';
 import Link from '@mui/material/Link';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Avatar from '@mui/material/Avatar';
+import axios from "axios";
+import { tempUsers } from './tempUsers';
+import { useNavigate } from "react-router-dom";
+
 
 function Copyright() {
   return (
     <Typography variant="body2" color="text.secondary" align="center">
       {'Copyright © '}
       <Link color="inherit" href="https://mui.com/">
-        Your Website
+        Hall of Fame
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -30,18 +34,37 @@ function Copyright() {
   );
 }
 
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-const usernames = ["abcd", "efgh", "idjk", "abcd", "efgh", "idjk","abcd", "efgh", "idjk"]
+// const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+// const usernames = 
 const theme = createTheme();
 
 export default function Album() {
 
-  const [username, setUsername] = useState("Aditya");
-
-  function changeUsername() {
-    setUsername("Amritansh");
+  const navigate = useNavigate();
+  const [users, setUsers] = useState(tempUsers);
+  const [token, setToken] = useState("");
+  const [navigateToNewUser, setNavigateToNewUser] = useState(false);
+  function getUsers() {
+    axios
+      .get(URL + "users", {
+        token: token
+      })
+      .then((response) => {
+        console.log(response.data);
+        setUsers(response.data);
+        
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   }
- 
+  function goToParticularUser(user){
+    navigate("/user/" + user.username, {state : {user: user}});
+  }
+  function goToLandingPage(){
+    navigate("/");
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -53,12 +76,13 @@ export default function Album() {
           
           <Box
             m={1}
+            width="90%"
             display="flex"
             justifyContent="flex-end"
             alignItems="flex-end"
             
            >
-            <Button variant="contained" color="primary" sx={{ height: 40 }}>
+            <Button onClick={() => {}}  variant="contained" color="primary" sx={{ height: 40 }}>
             Logout
             </Button>
             
@@ -77,7 +101,7 @@ export default function Album() {
             pb: 6,
           }}
         >
-          <Container maxWidth="sm">
+          <Container maxWidth="lg">
             <Typography
               component="h1"
               variant="h2"
@@ -85,7 +109,7 @@ export default function Album() {
               color="text.primary"
               gutterBottom
             >
-              Album layout
+              Welcome to Hall Of Fame
             </Typography>
             <Typography variant="h5" align="center" color="text.secondary" paragraph>
               Something short and leading about the collection below—its contents,
@@ -98,7 +122,7 @@ export default function Album() {
               spacing={2}
               justifyContent="center"
             >
-              <Button variant="contained">Main call to action</Button>
+              <Button variant="contained">Ready to answer some questions?</Button>
               <Button variant="outlined">Secondary action</Button>
             </Stack>
           </Container>
@@ -106,32 +130,23 @@ export default function Album() {
         <Container sx={{ py: 10 }} maxWidth="md">
           {/* End hero unit */}
           <Grid container spacing={10}>
-            {cards.map((card) => (
-              <Grid item key={card} xs={12} sm={6} md={4}>
+            {users.map((user, index) => (
+              <Grid item key={user} xs={12} sm={6} md={4}>
                 <Card
                   sx={{ height: '400px', width: '350px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}
                 >
-                  {/* <CardMedia
-                    component="img"
-                    sx={{
-                      // 16:9
-                      pt: '56.25%',
-                    }}
-                    image="https://source.unsplash.com/random"
-                    alt="random"
-                  /> */}
-                  <Avatar sx={{ width: 150, height: 150 }} alt="Remy Sharp" src="https://source.unsplash.com/random" />
+                  
+                  <Avatar sx={{ width: 150, height: 150 }} alt="Remy Sharp" src={user.imageURL} />
                   <CardContent sx={{ flexGrow: 1 }}>
                     <Typography gutterBottom variant="h5" component="h2">
-                      {username}
+                      {user.username}
                     </Typography>
                     <Typography>
-                      This is a media card. You can use this section to describe the
-                      content.
+                      {user.about}
                     </Typography>
                   </CardContent>
                   <CardActions>
-                    <Button size="small">View</Button>
+                    <Button onClick ={() => goToParticularUser(user)} size="small">View</Button>
                     
                   </CardActions>
                 </Card>
