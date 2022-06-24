@@ -27,7 +27,7 @@ function Copyright() {
     <Typography variant="body2" color="text.secondary" align="center">
       {'Copyright © '}
       <Link color="inherit" href="https://mui.com/">
-        Hall of Fame
+        Hall of Fame 
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}

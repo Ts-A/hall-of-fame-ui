@@ -11,7 +11,7 @@ import SignIn from "./SignIn";
 
 
 function LandingPage() {
-  
+
     const [boolSignUpDialouge, setBoolSignUpDialouge] = useState(false);
     const [boolSignInDialouge, setBoolSignInDialouge] = useState(false);
     
