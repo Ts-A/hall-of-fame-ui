@@ -62,7 +62,8 @@ export default function Album() {
       });
   }
   function goToParticularUser(user){
-    navigate("/user/" + user.username, {state : {user: user}});
+    // navigate("/user/" + user.username, {state : {user: user}});
+    navigate("/user/"+user)
   }
   function goToLandingPage(){
     navigate("/");
@@ -127,7 +128,7 @@ export default function Album() {
               spacing={2}
               justifyContent="center"
             >
-              <Button variant="contained">Ready to answer some questions?</Button>
+              <Button variant="contained" onClick={() => {goToParticularUser("anandamayee")}}>Ready to answer some questions?</Button>
               <Button onClick={() => {focusOnusersContainer()}} variant="outlined">I am scared. Let's see some examples, shall we?</Button>
             </Stack>
           </Container>
