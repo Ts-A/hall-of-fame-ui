@@ -13,9 +13,9 @@ import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import AddressForm from './AddressForm';
-import AboutYouForm from '../ParticularUserPage/Forms/AboutYouForm';
-import ExperienceForm from '../ParticularUserPage/Forms/ExperienceForm';
-import MoreAboutYouForm from '../ParticularUserPage/Forms/MoreAboutYouForm'
+import AboutYouForm from './Forms/AboutYouForm';
+import ExperienceForm from './Forms/ExperienceForm';
+import MoreAboutYouForm from './Forms/MoreAboutYouForm'
 import axios from "axios";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 
@@ -148,3 +148,6 @@ export default function Checkout() {
     </ThemeProvider>
   );
 }
+
+
+ 

@@ -1,9 +1,8 @@
 //import axios from "axios";
 import React, {useState, useEffect} from "react";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
-import Checkout  from "./FormNotFilled/Checkout";
-import FormFilled from "./FormFilled/FormFilled";
-import "./module.css";
+
+
 import axios from "axios";
 
 export default function ParticularUserPage() {
@@ -32,7 +31,7 @@ export default function ParticularUserPage() {
     // })
     return (
       <div>
-        {isFormFIlled ? <FormFilled /> : <Checkout /> }
+        <p>You have filled the form.</p>
       </div>
     );
 }

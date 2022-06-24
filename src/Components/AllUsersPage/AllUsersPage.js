@@ -19,7 +19,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Avatar from '@mui/material/Avatar';
 import axios from "axios";
 import { tempUsers } from './tempUsers';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 
 function Copyright() {
@@ -39,13 +39,42 @@ function Copyright() {
 // const usernames = 
 const theme = createTheme();
 
-export default function Album() {
+export default function AllUsersPage() {
 
   const navigate = useNavigate();
+  const location = useLocation();
+  const [isSignedIn, setIsSignedIn] = useState(true);
+  // useEffect(() => {
+  //   axios
+  //   .get(URL + "authenticate/" , {
+  //     username : localStorage.getIten(username),
+  //     token: token
+  //   })
+  //   .then((response) => {
+  //     setIsSignedIn(response.data.isSignedIn)
+  //     setDefaultUser(response.data.user);
+      
+  //   })
+  //   .catch(function (error) {
+  //     console.log(error);
+  //   });
+  // });
   const [users, setUsers] = useState(tempUsers);
   const [token, setToken] = useState("");
+  const [defaultUser, setDefaultUser] = useState(users[0]);
   const [navigateToNewUser, setNavigateToNewUser] = useState(false);
   const usersContainer = useRef(null);
+  
+
+  const handleSignUp = () => {
+    navigate("/login");
+  }
+  const handleSignIn = () => {
+    navigate("/register");
+  }
+  const handleLogout = () => {
+    setIsSignedIn(false);
+  }
 
   function getUsers() {
     axios
@@ -63,7 +92,7 @@ export default function Album() {
   }
   function goToParticularUser(user){
     // navigate("/user/" + user.username, {state : {user: user}});
-    navigate("/user/"+user)
+    navigate("/user/"+ user.username)
   }
   function goToLandingPage(){
     navigate("/");
@@ -88,9 +117,22 @@ export default function Album() {
             alignItems="flex-end"
             
            >
-            <Button onClick={() => { goToLandingPage()}}  variant="contained" color="primary" sx={{ height: 40 }}>
+            {isSignedIn ?
+            <Box>
+            <Button onClick={() => { goToParticularUser(defaultUser)}}  variant="contained" color="primary" sx={{ height: 40 }}>
+              Me
+            </Button>
+            <Button onClick={() => { handleLogout()}}  variant="contained" color="primary" sx={{ height: 40 }}>
             Logout
             </Button>
+            </Box>
+             : 
+              <Box> 
+              <Button onClick={() => { handleSignUp()}}  variant="contained" color="primary" sx={{ height: 40 }}>SignUp</Button>
+              <Button onClick={() => { handleSignIn()}}  variant="contained" color="primary" sx={{ height: 40 }}>SignIn</Button>
+              </Box>
+            }
+            
             
           </Box>
       
@@ -128,7 +170,7 @@ export default function Album() {
               spacing={2}
               justifyContent="center"
             >
-              <Button variant="contained" onClick={() => {goToParticularUser("anandamayee")}}>Ready to answer some questions?</Button>
+              <Button variant="contained" onClick={() => {goToParticularUser(defaultUser)}}>Ready to answer some questions?</Button>
               <Button onClick={() => {focusOnusersContainer()}} variant="outlined">I am scared. Let's see some examples, shall we?</Button>
             </Stack>
           </Container>
