@@ -17,7 +17,7 @@ import AboutYouForm from './Forms/AboutYouForm';
 import ExperienceForm from './Forms/ExperienceForm';
 import MoreAboutYouForm from './Forms/MoreAboutYouForm'
 import axios from "axios";
-import { useNavigate, useLocation, useParams } from "react-router-dom";
+import { useNavigate, useLocation, useParams, Navigate } from "react-router-dom";
 
 function Copyright() {
   return (
@@ -51,6 +51,8 @@ function getStepContent(step) {
 const theme = createTheme();
 
 export default function Checkout() {
+
+  const navigate = useNavigate();
   const [user, setUser] = useState({})
   let token = "";
   let {username} = useParams();
@@ -120,6 +122,12 @@ export default function Checkout() {
                   confirmation, and will send you an update when your order has
                   shipped.
                 </Typography>
+                {/* <Button onClick= {() => {
+                  navigate("/user/" +{user.username});
+                }}>Check your profile</Button> */}
+                <Button onClick= {() => {
+                  navigate("/");
+                }}>Return to Home Page</Button>
               </React.Fragment>
             ) : (
               <React.Fragment>
