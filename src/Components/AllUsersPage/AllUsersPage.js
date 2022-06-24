@@ -67,10 +67,10 @@ export default function AllUsersPage() {
   
 
   const handleSignUp = () => {
-    navigate("/login");
+    navigate("/register");
   }
   const handleSignIn = () => {
-    navigate("/register");
+    navigate("/login");
   }
   const handleLogout = () => {
     setIsSignedIn(false);
@@ -91,12 +91,9 @@ export default function AllUsersPage() {
       });
   }
   function goToParticularUser(user){
-    // navigate("/user/" + user.username, {state : {user: user}});
     navigate("/user/"+ user.username)
   }
-  function goToLandingPage(){
-    navigate("/");
-  } 
+  
   function focusOnusersContainer() {
     usersContainer.current.focus();
   }
@@ -170,7 +167,7 @@ export default function AllUsersPage() {
               spacing={2}
               justifyContent="center"
             >
-              <Button variant="contained" onClick={() => {goToParticularUser(defaultUser)}}>Ready to answer some questions?</Button>
+              <Button variant="contained" onClick={() => {isSignedIn ? goToParticularUser(defaultUser) : handleSignIn() }}>Ready to answer some questions?</Button>
               <Button onClick={() => {focusOnusersContainer()}} variant="outlined">I am scared. Let's see some examples, shall we?</Button>
             </Stack>
           </Container>
