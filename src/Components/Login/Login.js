@@ -30,33 +30,18 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-export default function SignUp() {
+export default function Login() {
 
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
-  const [firstname, setFirstname] = useState("");
-  const [lastname, setLastname] = useState("");
   const [password, setPassword] = useState("");
-  const [validUsername, setValidUsername] = useState(true);
-  const [boolRegistered, setBoolRegistered] = useState(true);
-  const handleValidUsername = () => {
-    axios
-      .get(URL + "checkValidUsername", {
-        username: username,
-      })
-      .then((response) => {
-        console.log(response.data);
-        if(response.data.validUsername == false) {
-            setValidUsername(false);
-        }
-        
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-    }
+  const [isSignedIn, setisSignedIn] = useState(true);
   
-  const handleSignUp = (event) => {
+
+  const handleRegister = () => {
+    navigate("/register");
+  }
+  const handleSignIn = (event) => {
     // axios
     //   .post(URL + "addNewUser", {
     //     username: username,
@@ -66,14 +51,15 @@ export default function SignUp() {
     //   })
     //   .then((response) => {
     //     console.log(response.data);
-    //     localStorage.setItem({token : token})
+    //      setisSignedIn(true);
+    //     localStorage.setItem({token : response.data.user.token, username : response.data.user.username})
         
     //   })
     //   .catch(function (error) {
     //     console.log(error);
     //   });
-    if(boolRegistered)
-        navigate("/users");
+    if(isSignedIn)
+        navigate("/");
     }
     
   
@@ -94,38 +80,15 @@ export default function SignUp() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign up
+            Sign In
           </Typography>
           <Box  noValidate  sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
-                <TextField
-                  autoComplete="given-name"
-                  name="firstName"
-                  required
-                  fullWidth
-                  id="firstName"
-                  label="First Name"
-                  value = {firstname}
-                  onChange= { (e) => {
-                    setFirstname(e.target.value);
-                    }}
-                  autoFocus
-                />
+                
               </Grid>
               <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  autoComplete="family-name"
-                  value = {lastname}
-                  onChange= { (e) => {
-                    setLastname(e.target.value);
-                    }}
-                />
+                
               </Grid>
               <Grid item xs={12}>
                 <TextField
@@ -137,12 +100,12 @@ export default function SignUp() {
                   autoComplete="username"
                   value={username}
                   onChange= { (e) => {
-                        setValidUsername(true);
+                        
                         setUsername(e.target.value);
-                        handleValidUsername();
                   }}
+                  autoFocus
                 />
-                <p > {validUsername ? "" : "Invalid Username"}</p>
+                
               </Grid>
               <Grid item xs={12}>
                 <TextField
@@ -160,18 +123,30 @@ export default function SignUp() {
                 />
               </Grid>
               <Grid item xs={12}>
-                
+               
               </Grid>
             </Grid>
             <Button
-              onClick ={handleSignUp}
+              onClick ={handleSignIn}
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign Up
+              Sign In
             </Button>
+            <Button
+              onClick ={handleRegister}
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+             Don't have an account, Register
+            </Button>
+            <Button onClick={() => {
+              navigate("/");
+            }}>Return back to Home Page</Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
                 {/* <Button onClick={() => { goToLandingPage()}}  variant="contained" color="primary" sx={{ height: 40 }}>
