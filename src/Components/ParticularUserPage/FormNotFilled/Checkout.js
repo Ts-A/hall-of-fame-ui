@@ -196,19 +196,17 @@ export default function Checkout() {
             {activeStep === steps.length ? (
               <React.Fragment>
                 <Typography variant="h5" gutterBottom>
-                  Thank you for your order.
+                  Thank you !.
                 </Typography>
                 <Typography variant="subtitle1">
-                  Your order number is #2001539. We have emailed your order
-                  confirmation, and will send you an update when your order has
-                  shipped.
+                 You have filled the form successfully.
                 </Typography>
                 {/* <Button onClick= {() => {
                   navigate("/user/" +{user.username});
                 }}>Check your profile</Button> */}
                 <Button onClick= {() => {
-                  navigate("/");
-                }}>Return to Home Page</Button>
+                  navigate("/user/" + username);
+                }}>Have a look!</Button>
               </React.Fragment>
             ) : (
               <React.Fragment>
