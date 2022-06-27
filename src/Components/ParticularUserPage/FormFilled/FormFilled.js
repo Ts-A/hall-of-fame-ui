@@ -7,18 +7,20 @@ import axios from "axios";
 
 export default function ParticularUserPage() {
   
-    const [user, setUser] = useState({});
-    const [isFormFIlled, setIsFormFIlled] = useState(false);
+    const [defaultUser, setdefaultUser] = useState(localStorage.getItem("user"));
+    const [userData, setUserData] = useState("");
     let token = "";
     let {username} = useParams();
     const getUser = () => {
       axios
       .get(URL + "user/" + {username}, {
-        token: token
+        token: token,
+
+
       })
       .then((response) => {
         console.log(response.data);
-        setUser(response.data.user);
+        setUserData(userData);
         
       })
       .catch(function (error) {

@@ -35,25 +35,31 @@ function Copyright() {
 const steps = ['About You', 'Your Experience @ Citi', 'Tell us more about you'];
 
 
-function getStepContent(step) {
-  switch (step) {
-    case 0:
-      return <AboutYouForm />;
-    case 1:
-      return <ExperienceForm />;
-    case 2:
-      return <MoreAboutYouForm />;
-    default:
-      throw new Error('Unknown step');
-  }
-}
+
+
+
 
 const theme = createTheme();
 
 export default function Checkout() {
 
+  const pull_data = (data) => {
+    console.log(data);
+    setUserData(data);
+    
+  }
+  // const pull_data = (data) => {
+  //   //console.log(data);
+  //   setUserData2(data);
+    
+  // }
+  // const pull_data3 = (data) => {
+  //   setUserData3(data);
+
+  // }
+  
   const navigate = useNavigate();
-  const [user, setUser] = useState({})
+  const [user, setUser] = useState("");
   let token = "";
   let {username} = useParams();
   const getUser = () => {
@@ -72,14 +78,89 @@ export default function Checkout() {
   }
 
   const [activeStep, setActiveStep] = React.useState(0);
+  const [userData, setUserData] = useState({
+    firstname : "",
+    lastname : "",
+    college : "",
+    soeid : "",
+    profile : "",
+    homeTown : "",
+    state :"",
+    country : "",
+    bio :"",
+    firstday : "",
+    liked : "",
+    disliked : "",
+    internshipPreference : "",
+    takeaway : "",
+    trutilie : "",
+    song : "",
+    playlist : "",
+    money : "",
+    behaviour : "",
+    moment : "",
+
+  });
 
   const handleNext = () => {
-    setActiveStep(activeStep + 1);
-  };
+
+    if(steps.length === activeStep) {
+      //    axios
+      //   .post(URL + "user/" + username  , {
+      //     username : localStorage.getIten(username),
+      //     token: token,
+      //     userData = userData
+      //   })
+      //   .then((response) => {
+      //     navigate("/ParticularUserPage");
+          
+      //   })
+      //   .catch(function (error) {
+      //     console.log(error);
+      //   });
+    }
+    else {
+      Promise.resolve()
+      .then(() => { setUserData({userData})})
+      .then(() => {setActiveStep(activeStep + 1)})
+      console.log(userData);
+    }
+    
+    }
+    
+  // useEffect(() => {
+  //   axios
+  //   .get(URL + "user/"  , {
+  //     username : localStorage.getIten(username),
+  //     token: token
+  //   })
+  //   .then((response) => {
+  //     setIsSignedIn(response.data.isSignedIn)
+  //     setUserData(response.userData);
+      
+  //   })
+  //   .catch(function (error) {
+  //     console.log(error);
+  //   });
+      
+  // });
 
   const handleBack = () => {
+
     setActiveStep(activeStep - 1);
   };
+  const getStepContent = (step) => {
+    switch (step) {
+      case 0:
+        return <AboutYouForm  func={pull_data} userData = {userData} />;
+      case 1:
+        return <ExperienceForm  func={pull_data} userData = {userData}/>;
+      case 2:
+        return <MoreAboutYouForm  func={pull_data} userData = {userData}/>;
+      default:
+        throw new Error('Unknown step');
+    }
+  }
 
   return (
     <ThemeProvider theme={theme}>

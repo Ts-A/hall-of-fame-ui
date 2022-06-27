@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
@@ -6,7 +6,34 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import InputLabel from '@mui/material/InputLabel';
 
-export default function AddressForm() {
+export default function AddressForm(props) {
+
+  const [userData, setUserData] = useState({
+    firstname : props.userData.firstname,
+    lastname : props.userData.lastname,
+    college : props.userData.college,
+    soeid : props.userData.soeid,
+    profile : props.userData.profile,
+    homeTown : props.userData.homeTown,
+    state : props.userData.state,
+    country : props.userData.country,
+    bio : props.userData.bio,
+    firstday : props.userData.firstday,
+    liked : props.userData.liked,
+    disliked : props.userData.disliked,
+    internshipPreference : props.userData.internshipPreference,
+    takeaway : props.userData.takeaway,
+    trutilie : props.userData.trutilie,
+    song : props.userData.song,
+    playlist : props.userData.playlist,
+    money : props.userData.money,
+    behaviour : props.userData.behaviour,
+    moment : props.userData.moment,
+
+  });
+
+  props.func(userData);
+
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
@@ -21,6 +48,13 @@ export default function AddressForm() {
             name="truthlie"
             fullWidth
             variant="outlined"
+            value = {userData.truthlie}
+            onChange = { (e) => {
+              let tempData = {...userData};
+              tempData.truthlie = e.target.value;
+              setUserData(tempData);
+
+            }}
           />
         </Grid>
         <Grid item xs={12}>
@@ -31,6 +65,13 @@ export default function AddressForm() {
             name="song"
             fullWidth
             variant="outlined"
+            value = {userData.song}
+            onChange = { (e) => {
+              let tempData = {...userData};
+              tempData.song = e.target.value;
+              setUserData(tempData);
+
+            }}
           />
         </Grid>
         <Grid item xs={12}>
@@ -40,6 +81,13 @@ export default function AddressForm() {
             name="playlist"
             fullWidth
             variant="outlined"
+            value = {userData.playlist}
+            onChange = { (e) => {
+              let tempData = {...userData};
+              tempData.playlist = e.target.value;
+              setUserData(tempData);
+
+            }}
           />
         </Grid>
         <Grid item xs={12}>
@@ -50,6 +98,13 @@ export default function AddressForm() {
             name="money"
             fullWidth
             variant="outlined"
+            value = {userData.moeny}
+            onChange = { (e) => {
+              let tempData = {...userData};
+              tempData.money = e.target.value;
+              setUserData(tempData);
+
+            }}
           />
         </Grid>
         <Grid item xs={12}>
@@ -59,56 +114,37 @@ export default function AddressForm() {
             name="behaviour"
             fullWidth
             variant="outlined"
+            value = {userData.behaviour}
+            onChange = { (e) => {
+              let tempData = {...userData};
+              tempData.behaviour = e.target.value;
+              setUserData(tempData);
+
+            }}
           />
         </Grid>
         <Grid item xs={12}>
         <InputLabel> If you could go back and change a moment, what would it be?</InputLabel>
           <TextField
-            id="behaviour"
-            name="behaviour"
+            id="moment"
+            name="moment"
             multiline
             rows={2}
             fullWidth
             variant="outlined"
+            value = {userData.moment}
+            onChange = { (e) => {
+              let tempData = {...userData};
+              tempData.moment = e.target.value;
+              setUserData(tempData);
+
+            }}
+
           />
         </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            id="state"
-            name="state"
-            label="State/Province/Region"
-            fullWidth
-            variant="filled"
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="zip"
-            name="zip"
-            label="Zip / Postal code"
-            fullWidth
-            autoComplete="shipping postal-code"
-            variant="standard"
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="country"
-            name="country"
-            label="Country"
-            fullWidth
-            autoComplete="shipping country"
-            variant="standard"
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <FormControlLabel
-            control={<Checkbox color="secondary" name="saveAddress" value="yes" />}
-            label="Use this address for payment details"
-          />
-        </Grid>
+        
+        
+       
       </Grid>
     </React.Fragment>
   );
