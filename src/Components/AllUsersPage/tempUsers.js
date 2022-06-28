@@ -17,6 +17,13 @@ export  const tempUsers = [
         about: "Civil Major again, but decent this time",
         imageURL : "https://source.unsplash.com/random"
         
+    },
+    {
+        username : "Brundha",
+        id : 4,
+        about: "ECE Major again, but decent this time",
+        imageURL : "https://source.unsplash.com/random"
+        
     }
 
 ]
