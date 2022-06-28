@@ -17,7 +17,8 @@ import AboutYouForm from '../ParticularUserPage/Forms/AboutYouForm';
 import ExperienceForm from '../ParticularUserPage/Forms/ExperienceForm';
 import MoreAboutYouForm from '../ParticularUserPage/Forms/MoreAboutYouForm'
 import axios from "axios";
-import { useNavigate, useLocation, useParams } from "react-router-dom";
+import { useNavigate, useLocation, useParams, Navigate } from "react-router-dom";
+import Album from '../AllUsersPage/AllUsersPage';
 
 function Copyright() {
   return (
@@ -43,6 +44,8 @@ function getStepContent(step) {
       return <ExperienceForm />;
     case 2:
       return <MoreAboutYouForm />;
+    case 3:
+      return <AboutYouForm />;
     default:
       throw new Error('Unknown step');
   }
@@ -51,6 +54,7 @@ function getStepContent(step) {
 const theme = createTheme();
 
 export default function Checkout() {
+  const navigate = useNavigate();
   const [user, setUser] = useState({})
   let token = "";
   let {username} = useParams();
@@ -79,6 +83,9 @@ export default function Checkout() {
     setActiveStep(activeStep - 1);
   };
 
+  const handleHome = () => {
+    navigate("/users")
+  };
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -113,13 +120,12 @@ export default function Checkout() {
             {activeStep === steps.length ? (
               <React.Fragment>
                 <Typography variant="h5" gutterBottom>
-                  Thank you for your order.
+                  Thank you!
                 </Typography>
                 <Typography variant="subtitle1">
-                  Your order number is #2001539. We have emailed your order
-                  confirmation, and will send you an update when your order has
-                  shipped.
+                  Go back and read more about your fellow interns!
                 </Typography>
+                <Button variant="contained" onClick={handleHome} sx={{ mt: 3, ml: 1 }}>Home</Button>
               </React.Fragment>
             ) : (
               <React.Fragment>

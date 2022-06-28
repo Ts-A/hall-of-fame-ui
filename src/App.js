@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import LandingPage from "./Components/LandingPage/LandingPage.js";
-import ParticularUserPage from "./Components/ParticularUserPage/ParticularUserPage.js";
+//import ParticularUserPage from "./Components/ParticularUserPage/ParticularUserPage1.js";
 import Form from "./Components/ParticularUserPage/Checkout.js";
 import Pricing from "./Components/AllUsersPage/AllUsersPage.js";
 // import {CreateUser} from "Components/CreateUser";

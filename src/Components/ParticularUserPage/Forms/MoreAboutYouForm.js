@@ -5,6 +5,10 @@ import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import InputLabel from '@mui/material/InputLabel';
+import FormLabel from '@mui/material/FormLabel';
+import FormControl from '@mui/material/FormControl';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
 
 export default function AddressForm() {
   return (
@@ -72,42 +76,251 @@ export default function AddressForm() {
             variant="outlined"
           />
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12}>
+        <InputLabel> If you were an artist, what would you paint on your first day?</InputLabel>
           <TextField
-            id="state"
-            name="state"
-            label="State/Province/Region"
+            id="behaviour"
+            name="behaviour"
+            multiline
+            rows={2}
             fullWidth
-            variant="filled"
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="zip"
-            name="zip"
-            label="Zip / Postal code"
-            fullWidth
-            autoComplete="shipping postal-code"
-            variant="standard"
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="country"
-            name="country"
-            label="Country"
-            fullWidth
-            autoComplete="shipping country"
-            variant="standard"
+            variant="outlined"
           />
         </Grid>
         <Grid item xs={12}>
-          <FormControlLabel
-            control={<Checkbox color="secondary" name="saveAddress" value="yes" />}
-            label="Use this address for payment details"
+        <InputLabel> If you could learn on skill instantly, what would it be?</InputLabel>
+          <TextField
+            id="behaviour"
+            name="behaviour"
+            multiline
+            rows={2}
+            fullWidth
+            variant="outlined"
           />
+        </Grid>
+        <Grid item xs={12}>
+        <InputLabel> What is the one thing you would change about your daily routine?</InputLabel>
+          <TextField
+            id="behaviour"
+            name="behaviour"
+            multiline
+            rows={2}
+            fullWidth
+            variant="outlined"
+          />
+        </Grid>
+        <Grid item xs={12}>
+        <InputLabel>What is your dream profile you want to pursue?</InputLabel>
+          <TextField
+            id="behaviour"
+            name="behaviour"
+            multiline
+            rows={2}
+            fullWidth
+            variant="outlined"
+          />
+        </Grid>
+        <Grid item xs={14}>
+        <InputLabel> If you suddenly had powers of invisibility, what would you use them for?</InputLabel>
+          <TextField
+            id="behaviour"
+            name="behaviour"
+            multiline
+            rows={2}
+            fullWidth
+            variant="outlined"
+          />
+        </Grid>
+        <Grid item xs={12}>
+        <InputLabel> What was your favourite TV show growing up?</InputLabel>
+          <TextField
+            id="behaviour"
+            name="behaviour"
+            multiline
+            rows={2}
+            fullWidth
+            variant="outlined"
+          />
+        </Grid>
+        <Grid item xs={12}>
+        <InputLabel> What is the one thing you would change about your daily routine?</InputLabel>
+          <TextField
+            id="behaviour"
+            name="behaviour"
+            multiline
+            rows={2}
+            fullWidth
+            variant="outlined"
+          />
+        </Grid>
+        <Grid item xs={12}>
+        <InputLabel>If you were to bring a fictional character to life, what would it be?</InputLabel>
+          <TextField
+            id="behaviour"
+            name="behaviour"
+            multiline
+            rows={2}
+            fullWidth
+            variant="outlined"
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <FormControl>
+          <FormLabel id="demo-row-radio-buttons-group-label">This or That?</FormLabel>
+          <RadioGroup
+            row
+            aria-labelledby="demo-row-radio-buttons-group-label"
+            name="row-radio-buttons-group"
+          >
+              <FormControlLabel value="Android" control={<Radio />} label="Android" />
+              <FormControlLabel value="IOS " control={<Radio />} label="IOS" />
+            </RadioGroup>
+            </FormControl>
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <FormControl>
+          <FormLabel id="demo-row-radio-buttons-group-label">This or That?</FormLabel>
+          <RadioGroup
+            row
+            aria-labelledby="demo-row-radio-buttons-group-label"
+            name="row-radio-buttons-group"
+          >
+              <FormControlLabel value="Day" control={<Radio />} label="Day" />
+              <FormControlLabel value="Night " control={<Radio />} label="Night" />
+            </RadioGroup>
+            </FormControl>
+        </Grid>
+
+        <Grid item xs={12} sm={6}>
+          <FormControl>
+          <FormLabel id="demo-row-radio-buttons-group-label">This or That?</FormLabel>
+          <RadioGroup
+            row
+            aria-labelledby="demo-row-radio-buttons-group-label"
+            name="row-radio-buttons-group"
+          >
+              <FormControlLabel value="Summer" control={<Radio />} label="Summer" />
+              <FormControlLabel value="Winter " control={<Radio />} label="Winter" />
+            </RadioGroup>
+            </FormControl>
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <FormControl>
+          <FormLabel id="demo-row-radio-buttons-group-label">This or That?</FormLabel>
+          <RadioGroup
+            row
+            aria-labelledby="demo-row-radio-buttons-group-label"
+            name="row-radio-buttons-group"
+          >
+              <FormControlLabel value="Coffee" control={<Radio />} label="Coffee" />
+              <FormControlLabel value="Tea " control={<Radio />} label="Tea" />
+            </RadioGroup>
+            </FormControl>
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <FormControl>
+          <FormLabel id="demo-row-radio-buttons-group-label">This or That?</FormLabel>
+          <RadioGroup
+            row
+            aria-labelledby="demo-row-radio-buttons-group-label"
+            name="row-radio-buttons-group"
+          >
+              <FormControlLabel value="Fiction" control={<Radio />} label="Fiction" />
+              <FormControlLabel value="Non-Fiction " control={<Radio />} label="Non-Fiction" />
+            </RadioGroup>
+            </FormControl>
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <FormControl>
+          <FormLabel id="demo-row-radio-buttons-group-label">This or That?</FormLabel>
+          <RadioGroup
+            row
+            aria-labelledby="demo-row-radio-buttons-group-label"
+            name="row-radio-buttons-group"
+          >
+              <FormControlLabel value="Call" control={<Radio />} label="Call" />
+              <FormControlLabel value="Text " control={<Radio />} label="Text" />
+            </RadioGroup>
+            </FormControl>
+        </Grid>
+
+        <Grid item xs={12} sm={6}>
+         <FormControl>
+          <FormLabel id="demo-row-radio-buttons-group-label">This or That?</FormLabel>
+          <RadioGroup
+            row
+            aria-labelledby="demo-row-radio-buttons-group-label"
+            name="row-radio-buttons-group"
+          >
+              <FormControlLabel value="Whey" control={<Radio />} label="Whey" />
+              <FormControlLabel value="Wine " control={<Radio />} label="Wine" />
+            </RadioGroup>
+          </FormControl>
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <FormControl>
+          <FormLabel id="demo-row-radio-buttons-group-label">This or That?</FormLabel>
+          <RadioGroup
+            row
+            aria-labelledby="demo-row-radio-buttons-group-label"
+            name="row-radio-buttons-group"
+          >
+              <FormControlLabel value="Money" control={<Radio />} label="Money" />
+              <FormControlLabel value="Fame" control={<Radio />} label="Fame" />
+            </RadioGroup>
+            </FormControl>
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <FormControl>
+          <FormLabel id="demo-row-radio-buttons-group-label">This or That?</FormLabel>
+          <RadioGroup
+            row
+            aria-labelledby="demo-row-radio-buttons-group-label"
+            name="row-radio-buttons-group"
+          >
+              <FormControlLabel value="Dog" control={<Radio />} label="Dog" />
+              <FormControlLabel value="Cat " control={<Radio />} label="Cat" />
+            </RadioGroup>
+            </FormControl>
+        </Grid>
+        <Grid item xs={12} sm={6}>
+         <FormControl>
+          <FormLabel id="demo-row-radio-buttons-group-label">This or That?</FormLabel>
+          <RadioGroup
+            row
+            aria-labelledby="demo-row-radio-buttons-group-label"
+            name="row-radio-buttons-group"
+          >
+              <FormControlLabel value="Introvert" control={<Radio />} label="Introvert" />
+              <FormControlLabel value="Extrovert " control={<Radio />} label="Extrovert" />
+            </RadioGroup>
+          </FormControl>
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <FormControl>
+          <FormLabel id="demo-row-radio-buttons-group-label">This or That?</FormLabel>
+          <RadioGroup
+            row
+            aria-labelledby="demo-row-radio-buttons-group-label"
+            name="row-radio-buttons-group"
+          >
+              <FormControlLabel value="Friendship" control={<Radio />} label="Friendship" />
+              <FormControlLabel value="Romance" control={<Radio />} label="Romance" />
+            </RadioGroup>
+            </FormControl>
+        </Grid>
+        <Grid item xs={12} sm={6}>
+        <FormControl>
+          <FormLabel id="demo-row-radio-buttons-group-label">This or That?</FormLabel>
+          <RadioGroup
+            row
+            aria-labelledby="demo-row-radio-buttons-group-label"
+            name="row-radio-buttons-group"
+          >
+              <FormControlLabel value="In-store shopping" control={<Radio />} label="In-store shopping" />
+              <FormControlLabel value="Online shopping " control={<Radio />} label="Online shopping" />
+            </RadioGroup>
+            </FormControl>
         </Grid>
       </Grid>
     </React.Fragment>
