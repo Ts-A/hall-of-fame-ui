@@ -14,10 +14,11 @@ import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import AboutYouForm from './Forms/AboutYouForm';
-import ExperienceForm from './Forms/ExperienceForm';
 import MoreAboutYouForm from './Forms/MoreAboutYouForm'
 import axios from "axios";
 import { useNavigate, useLocation, useParams, Navigate } from "react-router-dom";
+import {tempQuestions} from './Forms/tempQuestions';
+import { User} from './Forms/tempUser';
 
 function Copyright() {
   return (
@@ -32,32 +33,23 @@ function Copyright() {
   );
 }
 
-const steps = ['About You', 'Your Experience @ Citi', 'Tell us more about you'];
-
-
-
-
+const steps = ['About You', 'Spicy Questions'];
 
 
 const theme = createTheme();
 
 export default function Checkout() {
 
-  const pull_data = (data) => {
+  const pullUserData = (data) => {
     console.log(data);
     setUserData(data);
     
   }
-  // const pull_data = (data) => {
-  //   //console.log(data);
-  //   setUserData2(data);
+  const pullQuestions = (questions) => {
+    console.log(questions);
+    setQuestions(questions);
     
-  // }
-  // const pull_data3 = (data) => {
-  //   setUserData3(data);
-
-  // }
-  
+  }
   const navigate = useNavigate();
   const [user, setUser] = useState("");
   let token = "";
@@ -76,9 +68,40 @@ export default function Checkout() {
       console.log(error);
     });
   }
-
+  const [questions, setQuestions] = useState([
+    {
+        q: "Tera naam kya hai?",
+        a: "Nai pata",
+        example: "Tony Stark"
+    },
+    {
+        q: "Pata",
+        a: "Nai pata",
+        example: "10880, Malibu Point"
+    },
+    {
+        q: "Phone Number",
+        a: "Nai pata",
+        example: "212-970-4133"
+    },
+    {
+        q: "Date Of Birth",
+        a: "Nai pata",
+        example: "1970, May 29th"
+    },
+    {
+        q: "Tera naam kya hai?",
+        a: "Nai pata",
+        example: "Tony Stark"
+    },
+    {
+        q: "Tera naam kya hai?",
+        a: "Nai pata",
+        example: "Tony Stark"
+    },
+]);
   const [activeStep, setActiveStep] = React.useState(0);
-  const [userData, setUserData] = useState({
+  const [userData, setUserData] = useState( {
     firstname : "",
     lastname : "",
     college : "",
@@ -87,19 +110,6 @@ export default function Checkout() {
     homeTown : "",
     state :"",
     country : "",
-    bio :"",
-    firstday : "",
-    liked : "",
-    disliked : "",
-    internshipPreference : "",
-    takeaway : "",
-    trutilie : "",
-    song : "",
-    playlist : "",
-    money : "",
-    behaviour : "",
-    moment : "",
-
   });
 
   const handleNext = () => {
@@ -152,11 +162,9 @@ export default function Checkout() {
   const getStepContent = (step) => {
     switch (step) {
       case 0:
-        return <AboutYouForm  func={pull_data} userData = {userData} />;
+        return <AboutYouForm  func={pullUserData} userData = {userData} />;    
       case 1:
-        return <ExperienceForm  func={pull_data} userData = {userData}/>;
-      case 2:
-        return <MoreAboutYouForm  func={pull_data} userData = {userData}/>;
+        return <MoreAboutYouForm  func={pullQuestions} questions = {questions}/>;
       default:
         throw new Error('Unknown step');
     }
@@ -176,7 +184,7 @@ export default function Checkout() {
       >
         <Toolbar>
           <Typography variant="h6" color="inherit" noWrap>
-            Company name
+            Hall of Fame
           </Typography>
         </Toolbar>
       </AppBar>

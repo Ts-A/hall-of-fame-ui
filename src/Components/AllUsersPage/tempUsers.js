@@ -1,4 +1,4 @@
-export  const tempUsers = [
+export const tempUsers = [
     {
         username : "Aditya",
         id : 1,

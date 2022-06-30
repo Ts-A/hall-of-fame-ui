@@ -79,7 +79,7 @@ export default function Register() {
     //     console.log(error);
     //   });
     if(boolRegistered)
-        navigate("/", );
+        navigate("/user/questions", );
     }
     
   
