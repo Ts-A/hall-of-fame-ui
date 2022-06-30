@@ -20,8 +20,6 @@ import Avatar from '@mui/material/Avatar';
 import axios from "axios";
 import { tempUsers } from './tempUsers';
 import { useNavigate, useLocation } from "react-router-dom";
-import Checkout  from "../ParticularUserPage/FormNotFilled/Checkout";
-import FormFilled from "../ParticularUserPage/FormFilled/FormFilled";
 
 
 function Copyright() {
