@@ -40,22 +40,7 @@ export default function Register() {
   const [password, setPassword] = useState("");
   const [validUsername, setValidUsername] = useState(true);
   const [boolRegistered, setBoolRegistered] = useState(true);
-  const handleValidUsername = () => {
-    axios
-      .get(URL + "checkValidUsername", {
-        username: username,
-      })
-      .then((response) => {
-        console.log(response.data);
-        if(response.data.validUsername == false) {
-            setValidUsername(false);
-        }
-        
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-    }
+  
 
 
   const handleLogin = () => {
@@ -78,8 +63,9 @@ export default function Register() {
     //   .catch(function (error) {
     //     console.log(error);
     //   });
-    if(boolRegistered)
-        navigate("/", );
+      
+      if(boolRegistered)
+        navigate("/user/" + username  + "/edit" );
     }
     
   
@@ -143,9 +129,9 @@ export default function Register() {
                   autoComplete="username"
                   value={username}
                   onChange= { (e) => {
-                        setValidUsername(true);
+                        
                         setUsername(e.target.value);
-                        handleValidUsername();
+
                   }}
                 />
                 <p > {validUsername ? "" : "Invalid Username"}</p>

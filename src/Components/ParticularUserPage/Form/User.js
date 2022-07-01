@@ -24,7 +24,7 @@ import { useNavigate, useLocation, Navigate, useParams } from "react-router-dom"
 export default function User() {
   
     //const [defaultUser, setdefaultUser] = useState(localStorage.getItem("user"));
-    const [defaultUser, setdefaultUser] = useState("");
+    const [defaultUser, setdefaultUser] = useState("Aditya");
     const [userData, setUserData] = useState(UserData);
     const [questions, setQuestions] = useState(Questions);
     const navigate = useNavigate();
@@ -48,20 +48,9 @@ export default function User() {
     //  useEffect(() => {
     //   getUser();
     // })
-    const handleSubmit = () => {
-        axios
-      .post(URL + "user/" + {username} + "/questions", {
-        token: token,
-        questions : questions,
-        userData: userData
-      })
-      .then((response) => {
-        console.log(response.data);
-        navigate("/user/" + {username});
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    const handleEdit = () => {
+        console.log("Edit");
+        navigate("/user/" + username + "/edit");
     }
 
 
@@ -78,7 +67,7 @@ export default function User() {
                   </div>
                   <div class="row mt-2">
                       {userData.map((question, index) => (
-                        <div class="col-md-6"><label class="labels">{question.q}</label><input type="text" class="form-control" placeholder={question.q} value={question.a} onChange={(e) => {
+                        <div class="col-md-6"><label class="labels">{question.q}</label><input type="text" class="form-control" disabled readonly placeholder={question.q} value={question.a} onChange={(e) => {
                             let tempData = [];
                             tempData.push(...userData);
                             tempData[index].a = e.target.value;
@@ -94,7 +83,7 @@ export default function User() {
                   {questions.map((question, index) => (
 
 
-                     question.k === "q" ? <div class="col-md-12"><label class="labels">{question.q}</label><input type="text" class="form-control" placeholder="enter phone number" value={question.a} onChange={(e) => {
+                     question.k === "q" ? <div class="col-md-12"><label class="labels">{question.q}</label><input type="text" class="form-control" placeholder="enter phone number" disabled readonly value={question.a} onChange={(e) => {
                         let tempQuestions = [];
                         tempQuestions.push(...questions);
                         tempQuestions[index].a = e.target.value;
@@ -129,7 +118,7 @@ export default function User() {
                       <div class="col-md-6"><label class="labels">Country</label><input type="text" class="form-control" placeholder="country" value=""></input></div>
                       <div class="col-md-6"><label class="labels">State/Region</label><input type="text" class="form-control" value="" placeholder="state"></input></div>
                   </div>
-                  <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="button" onChange={handleSubmit}>Save Profile</button></div>
+                  <div class="mt-5 text-center">{username === defaultUser ? <button class="btn btn-primary profile-button" type="button" onClick={handleEdit}>Edit</button> : <br />}</div>
               </div>
           </div>
           <div class="col-md-4">

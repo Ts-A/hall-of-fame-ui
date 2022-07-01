@@ -129,7 +129,7 @@ export default function User() {
                       <div class="col-md-6"><label class="labels">Country</label><input type="text" class="form-control" placeholder="country" value=""></input></div>
                       <div class="col-md-6"><label class="labels">State/Region</label><input type="text" class="form-control" value="" placeholder="state"></input></div>
                   </div>
-                  <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="button" onChange={handleSubmit}>Save Profile</button></div>
+                  <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="button" onClick={handleSubmit}>Save Profile</button></div>
               </div>
           </div>
           <div class="col-md-4">
