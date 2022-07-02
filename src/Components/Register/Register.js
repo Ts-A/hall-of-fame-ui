@@ -14,6 +14,8 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
+import { Card, CardContent } from '@mui/material';
+import signup from '../../Assets/signup.svg';
 
 function Copyright(props) {
   return (
@@ -28,7 +30,27 @@ function Copyright(props) {
   );
 }
 
-const theme = createTheme();
+const theme = createTheme({
+  typography: {
+    fontFamily: [
+      '-apple-system',
+      'BlinkMacSystemFont',
+      '"Segoe UI"',
+      'Roboto',
+      '"Helvetica Neue"',
+      'Arial',
+      'sans-serif',
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"',
+    ].join(','),
+  },
+  palette:{
+    primary:{
+      main: '#7584c3'
+    }
+  }
+});
 
 export default function Register() {
 
@@ -74,6 +96,8 @@ export default function Register() {
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
+        <Card sx={{marginTop: 2}} style={{ border: "3px outset #7584c333", borderRadius: "15px" }}>
+        <CardContent>
         <Box
           sx={{
             marginTop: 8,
@@ -82,13 +106,14 @@ export default function Register() {
             alignItems: 'center',
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+          {/* <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
             <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
+          </Avatar> */}
+           <img src={signup} width="200px" height="300px"  style={{marginTop:"-100px", marginBottom:"-50px"}}/>
+          <Typography component="h1" variant="h5" style={{marginBottom:"10px"}}>
             Sign up
           </Typography>
-          <Box  noValidate  sx={{ mt: 3 }}>
+          <Box  noValidate  sx={{ mt: 1 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -136,7 +161,7 @@ export default function Register() {
                 />
                 <p > {validUsername ? "" : "Invalid Username"}</p>
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={12} style={{marginTop: "-15px"}}>
                 <TextField
                   required
                   fullWidth
@@ -151,16 +176,13 @@ export default function Register() {
                     }}
                 />
               </Grid>
-              <Grid item xs={12}>
-                
-              </Grid>
             </Grid>
             <Button
               onClick ={handleSignUp}
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+              sx={{ mt: 1, mb: 1 }}
             >
               Sign Up
             </Button>
@@ -169,7 +191,7 @@ export default function Register() {
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+              sx={{ mt: 1, mb: 1 }}
             >
              Already have an account, Login
             </Button>
@@ -185,6 +207,8 @@ export default function Register() {
             </Grid>
           </Box>
         </Box>
+        </CardContent>
+        </Card>
         <Copyright sx={{ mt: 5 }} />
       </Container>
     </ThemeProvider>

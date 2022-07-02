@@ -21,6 +21,7 @@ import axios from "axios";
 import { tempUsers } from './tempUsers';
 import { useNavigate, useLocation } from "react-router-dom";
 
+import ResponsiveAppBar from './ResponsiveAppBar.js';
 
 function Copyright() {
   return (
@@ -37,7 +38,27 @@ function Copyright() {
 
 // const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 // const usernames = 
-const theme = createTheme();
+const theme = createTheme({
+  typography: {
+    fontFamily: [
+      '-apple-system',
+      'BlinkMacSystemFont',
+      '"Segoe UI"',
+      'Roboto',
+      '"Helvetica Neue"',
+      'Arial',
+      'sans-serif',
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"',
+    ].join(','),
+  },
+  palette:{
+    primary:{
+      main: '#7584c3'
+    }
+  }
+});
 
 export default function AllUsersPage() {
 
@@ -100,15 +121,18 @@ export default function AllUsersPage() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <AppBar position="relative">
+        <ResponsiveAppBar/>
+      
+      {/* ################################################################################# */}
+      {/* <AppBar position="relative">
         <Toolbar>
-          <Typography variant="h6" color="inherit" noWrap>
+          <Typography variant="h6" color="inherit">
             Hall of Fame
           </Typography>
           
           <Box
             m={1}
-            width="90%"
+            width="100%"
             display="flex"
             justifyContent="flex-end"
             alignItems="flex-end"
@@ -136,7 +160,9 @@ export default function AllUsersPage() {
          
         </Toolbar>
        
-      </AppBar>
+      </AppBar> */}
+
+      {/* ################################################################################# */}
       <main>
         {/* Hero unit */}
         <Box
@@ -157,9 +183,7 @@ export default function AllUsersPage() {
               Welcome to Hall Of Fame
             </Typography>
             <Typography variant="h5" align="center" color="text.secondary" paragraph>
-              Something short and leading about the collection below—its contents,
-              the creator, etc. Make it short and sweet, but not too short so folks
-              don&apos;t simply skip over it entirely.
+              A place to share and know more about your fellow Citi interns!
             </Typography>
             <Stack
               sx={{ pt: 4 }}
@@ -167,7 +191,7 @@ export default function AllUsersPage() {
               spacing={2}
               justifyContent="center"
             >
-              <Button variant="contained" onClick={() => {isSignedIn ? goToParticularUser(defaultUser) : handleSignIn() }}>Ready to answer some questions?</Button>
+              <Button variant="contained" color="primary" onClick={() => {isSignedIn ? goToParticularUser(defaultUser) : handleSignIn() }}>Ready to answer some questions?</Button>
               <Button onClick={() => {focusOnusersContainer()}} variant="outlined">I am scared. Let's see some examples, shall we?</Button>
             </Stack>
           </Container>
@@ -177,11 +201,11 @@ export default function AllUsersPage() {
           <Grid container spacing={10}>
             {users.map((user, index) => (
               <Grid item key={user} xs={12} sm={6} md={4}>
-                <Card
-                  sx={{ height: '400px', width: '350px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+                <Card style={{ border: "3px outset #7584c333", borderRadius: "10px"}}
+                  sx={{ height: '350px', width: '300px', display: 'flex', flexDirection: 'column', alignItems: 'center', py: 4}}
                 >
                   
-                  <Avatar sx={{ width: 150, height: 150 }} alt="Remy Sharp" src={user.imageURL} />
+                  <Avatar sx={{ width: 125, height: 125}} alt="Remy Sharp" src={user.imageURL} />
                   <CardContent sx={{ flexGrow: 1 }}>
                     <Typography gutterBottom variant="h5" component="h2">
                       {user.username}
@@ -191,7 +215,7 @@ export default function AllUsersPage() {
                     </Typography>
                   </CardContent>
                   <CardActions>
-                    <Button onClick ={() => goToParticularUser(user)} size="small">View</Button>
+                    <Button onClick ={() => goToParticularUser(user)} sx={{mb:-4}}>View</Button>
                     
                   </CardActions>
                 </Card>

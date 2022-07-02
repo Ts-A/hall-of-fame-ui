@@ -14,6 +14,8 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { Card, CardContent } from '@mui/material';
+import login from '../../Assets/login.svg';
 
 function Copyright(props) {
   return (
@@ -28,7 +30,27 @@ function Copyright(props) {
   );
 }
 
-const theme = createTheme();
+const theme = createTheme({
+  typography: {
+    fontFamily: [
+      '-apple-system',
+      'BlinkMacSystemFont',
+      '"Segoe UI"',
+      'Roboto',
+      '"Helvetica Neue"',
+      'Arial',
+      'sans-serif',
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"',
+    ].join(','),
+  },
+  palette:{
+    primary:{
+      main: '#7584c3'
+    }
+  }
+});
 
 export default function Login() {
 
@@ -66,23 +88,26 @@ export default function Login() {
 
   return (
     <ThemeProvider theme={theme}>
+      
       <Container component="main" maxWidth="xs">
         <CssBaseline />
+        <Card sx={{marginTop: 2}} style={{ border: "3px outset #7584c333", borderRadius: "15px" }}>
+          <CardContent>
         <Box
           sx={{
-            marginTop: 8,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+          {/* <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
             <LockOutlinedIcon />
-          </Avatar>
+          </Avatar> */}
+          <img src={login} width="300px" height="500px"  style={{marginTop:"-100px", marginBottom:"-100px"}}/>
           <Typography component="h1" variant="h5">
             Sign In
           </Typography>
-          <Box  noValidate  sx={{ mt: 3 }}>
+          <Box  noValidate  sx={{ mt: 1 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 
@@ -131,7 +156,7 @@ export default function Login() {
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+              sx={{ mt: 0, mb: 0 }}
             >
               Sign In
             </Button>
@@ -140,7 +165,7 @@ export default function Login() {
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+              sx={{ mt: 1, mb: 1 }}
             >
              Don't have an account, Register
             </Button>
@@ -156,8 +181,11 @@ export default function Login() {
             </Grid>
           </Box>
         </Box>
+        </CardContent>
+        </Card>
         <Copyright sx={{ mt: 5 }} />
       </Container>
+
     </ThemeProvider>
   );
 }
