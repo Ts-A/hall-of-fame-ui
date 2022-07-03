@@ -55,7 +55,7 @@ const theme = createTheme({
 export default function Login() {
 
   const navigate = useNavigate();
-  const [username, setUsername] = useState("");
+  const [soeid, setSoeid] = useState("");
   const [password, setPassword] = useState("");
   const [isSignedIn, setisSignedIn] = useState(true);
   
@@ -64,28 +64,28 @@ export default function Login() {
     navigate("/register");
   }
   const handleSignIn = (event) => {
-    // axios
-    //   .post(URL + "addNewUser", {
-    //     username: username,
-    //     password: password,
-    //     firstname: firstname,
-    //     lastname: lastname
-    //   })
-    //   .then((response) => {
-    //     console.log(response.data);
-    //      setisSignedIn(true);
-    //     localStorage.setItem({token : response.data.user.token, username : response.data.user.username})
-        
-    //   })
-    //   .catch(function (error) {
-    //     console.log(error);
-    //   });
-    if(isSignedIn)
-        navigate("/");
-    }
-    
-  
+    axios({
+      method: 'POST',
+      url: "https://0d92-223-178-110-162.in.ngrok.io/user/login/",
+      data : { user : {
+        soe_id : soeid,
+        password : password
+      } }
+    })
+    .then(response => {
+      console.log(response.data);
+      if(response.data.message === "User Created") {
+        console.log("User logged in Successfully");
 
+        localStorage.setItem('soeid', response.data.user.soe_id);
+        localStorage.setItem('token', response.data.token);
+      
+        navigate("/user/" + localStorage.getItem('soeid') + "/edit");
+      }
+    }) 
+    .catch(e => console.log(e));
+  }
+    
   return (
     <ThemeProvider theme={theme}>
       
@@ -119,14 +119,14 @@ export default function Login() {
                 <TextField
                   required
                   fullWidth
-                  id="username"
-                  label="Username"
-                  name="username"
-                  autoComplete="username"
-                  value={username}
+                  id="soeid"
+                  label="soeid"
+                  name="soeid"
+                  autoComplete="soeid"
+                  value={soeid}
                   onChange= { (e) => {
                         
-                        setUsername(e.target.value);
+                        setSoeid(e.target.value);
                   }}
                   autoFocus
                 />

@@ -18,7 +18,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 const pages = [];
 const settings = ['Profile', 'Logout'];
 
-const ResponsiveAppBar = () => {
+const ResponsiveAppBar = (props) => {
   const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -167,7 +167,7 @@ const ResponsiveAppBar = () => {
               </MenuItem>
 
                 <MenuItem onClick={handleCloseUserMenuLogout}>
-                  <Typography textAlign="center">Logout</Typography>
+                  <Typography textAlign="center">{props.isSignedIn ? "Logout" : "Login" }</Typography>
                 </MenuItem>
              
             </Menu>

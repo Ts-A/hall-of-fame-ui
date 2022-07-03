@@ -64,7 +64,7 @@ export default function AllUsersPage() {
 
   const navigate = useNavigate();
   const location = useLocation();
-  const [isSignedIn, setIsSignedIn] = useState(true);
+  const [isSignedIn, setIsSignedIn] = useState(false);
   // useEffect(() => {
   //   axios
   //   .get(URL + "authenticate/" , {
@@ -121,7 +121,7 @@ export default function AllUsersPage() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-        <ResponsiveAppBar/>
+        <ResponsiveAppBar props={isSignedIn}/>
       
       {/* ################################################################################# */}
       {/* <AppBar position="relative">

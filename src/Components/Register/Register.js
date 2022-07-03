@@ -54,44 +54,45 @@ const theme = createTheme({
 
 export default function Register() {
 
-  
   const navigate = useNavigate();
-  const [username, setUsername] = useState("");
+  const [soeid, setSoeid] = useState("");
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [password, setPassword] = useState("");
   const [validUsername, setValidUsername] = useState(true);
   const [boolRegistered, setBoolRegistered] = useState(true);
   
-
+  const api_url = "http://localhost:4000/";
 
   const handleLogin = () => {
     navigate("/login");
   }
-
-  const handleSignUp = (event) => {
-    // axios
-    //   .post(URL + "addNewUser", {
-    //     username: username,
-    //     password: password,
-    //     firstname: firstname,
-    //     lastname: lastname
-    //   })
-    //   .then((response) => {
-    //     console.log(response.data);
-    //     localStorage.setItem({token : token})
-        
-    //   })
-    //   .catch(function (error) {
-    //     console.log(error);
-    //   });
-      
-      if(boolRegistered)
-        navigate("/user/" + username  + "/edit" );
-    }
-    
   
+  const handleSignUp = () => {
+    axios({
+      method: 'POST',
+      url: "https://0d92-223-178-110-162.in.ngrok.io/user/register",
+      data : { user : {
+        soe_id : soeid,
+        first_name : firstname,
+        last_name: lastname,
+        password : password
+      } }
+    })
+    .then(response => {
+      console.log(response.data);
+      if(response.data.message === "User Created") {
+        console.log("User Registered Successfully");
 
+        localStorage.setItem('soeid', response.data.user.soe_id);
+        localStorage.setItem('token', response.data.token);
+      
+        navigate("/user/" + localStorage.getItem('soeid') + "/edit");
+      }
+    }) 
+    .catch(e => console.log(e));
+};
+    
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -148,14 +149,14 @@ export default function Register() {
                 <TextField
                   required
                   fullWidth
-                  id="username"
-                  label="Username"
-                  name="username"
-                  autoComplete="username"
-                  value={username}
+                  id="soeid"
+                  label="soeid"
+                  name="soeid"
+                  autoComplete="soeid"
+                  value={soeid}
                   onChange= { (e) => {
                         
-                        setUsername(e.target.value);
+                        setSoeid(e.target.value);
 
                   }}
                 />
