@@ -1,23 +1,15 @@
 export const UserData = [
     {
-        q : "name",
-        a : ""
+        label : "firstname",
+        value : ""
     },
     {
-        q : "hometown",
-        a : ""
+        label : "lastname",
+        value : ""
     },
     {
-        q : "College",
-        a : ""
-
+        label : "soeid",
+        value : ""
     },
-    {
-        q : "soeid",
-        a : ""
-    },
-    {
-        q : "Profile",
-        a : ""
-    },
+ 
 ]

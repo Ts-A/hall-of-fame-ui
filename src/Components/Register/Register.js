@@ -16,6 +16,7 @@ import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Card, CardContent } from '@mui/material';
 import signup from '../../Assets/signup.svg';
+import Alert from '@mui/material/Alert';
 
 function Copyright(props) {
   return (
@@ -60,7 +61,7 @@ export default function Register() {
   const [lastname, setLastname] = useState("");
   const [password, setPassword] = useState("");
   const [validUsername, setValidUsername] = useState(true);
-  const [boolRegistered, setBoolRegistered] = useState(true);
+  const [isRegistered, setIsRegistered] = useState(true);
   
   const api_url = "http://localhost:4000/";
 
@@ -90,7 +91,10 @@ export default function Register() {
         navigate("/user/" + localStorage.getItem('soeid') + "/edit");
       }
     }) 
-    .catch(e => console.log(e));
+    .catch(e => {
+      console.log(e);
+      setIsRegistered(false);
+    });
 };
     
   return (
@@ -114,7 +118,7 @@ export default function Register() {
           <Typography component="h1" variant="h5" style={{marginBottom:"10px"}}>
             Sign up
           </Typography>
-          <Box  noValidate  sx={{ mt: 1 }}>
+          <Box  noValidate  sx={{ mt: 1 }} onFocus={() => { setIsRegistered(true)}}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -187,6 +191,7 @@ export default function Register() {
             >
               Sign Up
             </Button>
+            {isRegistered ?<br /> : <Alert severity="error">Registration failed.</Alert>}
             <Button
               onClick ={handleLogin}
               type="submit"

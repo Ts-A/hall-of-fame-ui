@@ -17,7 +17,8 @@ import { InputLabel, Radio, RadioGroup } from '@mui/material';
 
 
 import { useNavigate, useLocation, Navigate, useParams } from "react-router-dom";
-
+import ResponsiveAppBar from '../../Header/ResponsiveAppBar';
+import Footer from '../../Footer/Footer';
 
 
 
@@ -27,46 +28,74 @@ export default function User() {
     const [defaultUser, setdefaultUser] = useState("");
     const [userData, setUserData] = useState(UserData);
     const [questions, setQuestions] = useState(Questions);
+    const [answers, setAnswers] = useState([]);
+    const [isSignedIn, setIsSignedIn] = useState(true);
     const navigate = useNavigate();
-    let token = "";
+   
+
     let {username} = useParams();
-    const getUser = () => {
-      axios
-      .get(URL + "user/" + {username} + "/questions", {
-        token: token,
-      })
-      .then((response) => {
-        console.log(response.data);
-        setUserData(response.data.userData);
-        setQuestions(response.data.questions);   
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    useEffect(() => {
+      // axios({
+      //   method: 'GET',
+      //   url: "https://0d92-223-178-110-162.in.ngrok.io/question/",
+      // })
+      // .then(response => {
+      //   console.log(response.data);
+      //   if(response.status === 200) {
+      //     setQuestions(response.data.questions);
+      //     let tempAnswers = [];
+      //     questions.map(question => {
+      //       tempAnswers.push({
+      //         title : question.title,
+      //         response : ""
+      //       })
+      //     })
+      //     setAnswers(tempAnswers);
+      //     console.log(answers);
+      //   }
+      // }) 
+      // .catch(e => {
+      //   console.log(e);
+      // }
+      //  );
+       loadAnswers();
+    })
+    const loadAnswers = () => {
+      let tempAnswers = [];
+          questions.map(question => {
+            tempAnswers.push({
+              title : question.title,
+              response : ""
+            })
+          })
+          setAnswers(tempAnswers);
+          console.log(answers);
     }
 
-    //  useEffect(() => {
-    //   getUser();
-    // })
     const handleSubmit = () => {
-        axios
-      .post(URL + "user/" + {username} + "/questions", {
-        token: token,
-        questions : questions,
-        userData: userData
+      axios({
+        method: 'POST',
+        url: "https://0d92-223-178-110-162.in.ngrok.io/answer/bulk_upload",
+        data : {answers : answers}
       })
-      .then((response) => {
-        console.log(response.data);
-        navigate("/user/" + {username});
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+      .then(response => {
+        console.log();
+        if(response.status === 200) {
+          navigate("/users/" + {username});
+        }
+      }) 
+      .catch(e => {
+        console.log(e);
+      }
+       );
     }
 
 
     return ( 
+      <div>
+        <ResponsiveAppBar props={isSignedIn}/>
     <div class="container rounded bg-white mt-5 mb-5">
+      
       <div class="row">
           <div class="col-md-3 border-right">
               <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"></img><span class="font-weight-bold">Edogaru</span><span class="text-black-50">edogaru@mail.com.my</span><span> </span></div>
@@ -94,28 +123,20 @@ export default function User() {
                   {questions.map((question, index) => (
 
 
-                     question.k === "q" ? <div class="col-md-12"><label class="labels">{question.q}</label><input type="text" class="form-control" placeholder="enter phone number" value={question.a} onChange={(e) => {
+                     question.type === "descriptive" ? <div class="col-md-12"><label class="labels">{question.title}</label><input type="text" class="form-control" placeholder="enter phone number" value="" onChange={(e) => {
                         let tempQuestions = [];
                         tempQuestions.push(...questions);
                         tempQuestions[index].a = e.target.value;
                         setQuestions(tempQuestions)
                     }}></input></div> : 
-                    <FormControl>
-                    <FormLabel id="demo-row-radio-buttons-group-label">Given a choice, which one would you prefer?</FormLabel>
-                    <RadioGroup
-                      row
-                      aria-labelledby="demo-row-radio-buttons-group-label"
-                      name="row-radio-buttons-group"
-                      onChange={(e) => {
-                        let tempData = {...userData};
-                            tempData.internshipPreference = e.target.value;
-                            setUserData(tempData);
-                       }}  
-                    >
-                        <FormControlLabel value="virtual" control={<Radio />} label="Virtual internship" />
-                        <FormControlLabel value="offline" control={<Radio />} label="In-Office internship" />
-                       </RadioGroup>
-                      </FormControl>
+                    <div><div class="form-check form-check-inline"> 
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"  />
+                    <label class="form-check-label" for="inlineRadio1">{question.title.split("/")[0]}</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2" />
+                    <label class="form-check-label" for="inlineRadio2">{question.title.split("/")[1]}</label>
+                  </div></div>
                 
                 
                 
@@ -141,6 +162,9 @@ export default function User() {
           </div>
       </div>
   </div>
+  <Footer />
+      </div>
+      
    
   );
 }

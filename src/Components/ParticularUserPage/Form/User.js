@@ -4,7 +4,6 @@ import React, {useState, useEffect, useRef} from 'react';
 import Avatar from '@mui/material/Avatar';
 import axios from "axios";
 import "./module.css";
-import { Questions } from './Questions';
 import { UserData } from './UserData';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
@@ -15,8 +14,10 @@ import FormLabel from '@mui/material/FormLabel';
 import Checkbox from '@mui/material/Checkbox';
 import { InputLabel, Radio, RadioGroup } from '@mui/material';
 
-
+import ResponsiveAppBar from '../../Header/ResponsiveAppBar';
 import { useNavigate, useLocation, Navigate, useParams } from "react-router-dom";
+import Footer from '../../Footer/Footer';
+import { Responses } from './Responses';
 
 
 
@@ -26,36 +27,45 @@ export default function User() {
     //const [defaultUser, setdefaultUser] = useState(localStorage.getItem("user"));
     const [defaultUser, setdefaultUser] = useState("Aditya");
     const [userData, setUserData] = useState(UserData);
-    const [questions, setQuestions] = useState(Questions);
+    const [isSignedIn, setIsSignedIn] = useState(true);
+    const [responses, setResponses] = useState(Responses);
     const navigate = useNavigate();
     let token = "";
     let {username} = useParams();
-    const getUser = () => {
-      axios
-      .get(URL + "user/" + {username} + "/questions", {
-        token: token,
-      })
-      .then((response) => {
-        console.log(response.data);
-        setUserData(response.data.userData);
-        setQuestions(response.data.questions);   
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-    }
+    useState(() => {
+      const getUser = () => {
+        axios.get("https://0d92-223-178-110-162.in.ngrok.io/user/AK12345")
+        .then(response => {
+          console.log(response);
+          if(response.status === 200) {
+            setResponses(response.data.user.responses);
 
-    //  useEffect(() => {
-    //   getUser();
-    // })
+            let tempUserData = [];
+            tempUserData.push(...userData);
+            tempUserData[0].value = response.data.user.first_name;
+            tempUserData[1].value = response.data.user.last_name;
+            tempUserData[2].value = response.data.user.soe_id;
+            setUserData(tempUserData);
+          }
+        }) 
+        .catch(e => {
+          console.log(e);
+        }
+         );
+      }
+      //getUser();
+    })
     const handleEdit = () => {
         console.log("Edit");
         navigate("/user/" + username + "/edit");
     }
+    
 
-
-    return ( 
-    <div class="container rounded bg-white mt-5 mb-5">
+    return (
+      <div>
+        <ResponsiveAppBar props ={isSignedIn} />
+      <div class="container rounded bg-white mt-5 mb-5">
+      
       <div class="row">
           <div class="col-md-3 border-right">
               <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"></img><span class="font-weight-bold">Edogaru</span><span class="text-black-50">edogaru@mail.com.my</span><span> </span></div>
@@ -66,8 +76,8 @@ export default function User() {
                       <h4 class="text-right">Profile</h4>
                   </div>
                   <div class="row mt-2">
-                      {userData.map((question, index) => (
-                        <div class="col-md-6"><label class="labels">{question.q}</label><input type="text" class="form-control" disabled readonly placeholder={question.q} value={question.a} onChange={(e) => {
+                      {userData.map((user, index) => (
+                        <div class="col-md-6"><label class="labels">{user.label}</label><input type="text" class="form-control" disabled readonly placeholder={user.label} value={user.value} onChange={(e) => {
                             let tempData = [];
                             tempData.push(...userData);
                             tempData[index].a = e.target.value;
@@ -80,33 +90,19 @@ export default function User() {
                       <h4 class="text-right mt-3">Questionnaire</h4>
                   </div>
                   <div class="row mt-3">
-                  {questions.map((question, index) => (
-
-
-                     question.k === "q" ? <div class="col-md-12"><label class="labels">{question.q}</label><input type="text" class="form-control" placeholder="enter phone number" disabled readonly value={question.a} onChange={(e) => {
-                        let tempQuestions = [];
-                        tempQuestions.push(...questions);
-                        tempQuestions[index].a = e.target.value;
-                        setQuestions(tempQuestions)
-                    }}></input></div> : 
-                    <FormControl>
-                    <FormLabel id="demo-row-radio-buttons-group-label">Given a choice, which one would you prefer?</FormLabel>
-                    <RadioGroup
-                      row
-                      aria-labelledby="demo-row-radio-buttons-group-label"
-                      name="row-radio-buttons-group"
-                      onChange={(e) => {
-                        let tempData = {...userData};
-                            tempData.internshipPreference = e.target.value;
-                            setUserData(tempData);
-                       }}  
-                    >
-                        <FormControlLabel value="virtual" control={<Radio />} label="Virtual internship" />
-                        <FormControlLabel value="offline" control={<Radio />} label="In-Office internship" />
-                       </RadioGroup>
-                      </FormControl>
-                
-                
+                  {responses.map((response, index) => (
+                     response.question.type === "descriptive" ? <div class="col-md-12"><label class="labels">{response.question.title}</label><input type="text" class="form-control" placeholder="enter phone number" disabled readonly value={response.answer.response} ></input></div> : 
+                    
+                    <div><div class="form-check form-check-inline"> 
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" {...response.question.title.split("/")[0] === response.answer.response ? "checked"  : "disabled"} />
+                    <label class="form-check-label" for="inlineRadio1">{response.question.title.split("/")[0]}</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"  {...response.question.title.split("/")[1] === response.answer.response ? "checked" : "disabled"}/>
+                    <label class="form-check-label" for="inlineRadio2">{response.question.title.split("/")[1]}</label>
+                  </div></div>
+                    
+                    
                 
                 
                 
@@ -130,6 +126,9 @@ export default function User() {
           </div>
       </div>
   </div>
+  <Footer />
+  </div>
+      
    
   );
 }

@@ -40,7 +40,7 @@ const ResponsiveAppBar = (props) => {
 
   const handleCloseUserMenuProfile = () => {
     setAnchorElUser(null);
-    navigate("/user/Aditya")
+    navigate("/user/" + localStorage.getItem('soeid'));
     // add code to navigate to user profile (filled form)
   };
 

@@ -21,20 +21,9 @@ import axios from "axios";
 import { tempUsers } from './tempUsers';
 import { useNavigate, useLocation } from "react-router-dom";
 
-import ResponsiveAppBar from './ResponsiveAppBar.js';
+import Header from '../Header/ResponsiveAppBar.js';
+import Footer from '../Footer/Footer.js';
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Hall of Fame
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
 
 // const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 // const usernames = 
@@ -121,7 +110,7 @@ export default function AllUsersPage() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-        <ResponsiveAppBar props={isSignedIn}/>
+        <Header props={isSignedIn}/>
       
       {/* ################################################################################# */}
       {/* <AppBar position="relative">
@@ -225,20 +214,7 @@ export default function AllUsersPage() {
         </Container>
       </main>
       {/* Footer */}
-      <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer">
-        <Typography variant="h6" align="center" gutterBottom>
-          Footer
-        </Typography>
-        <Typography
-          variant="subtitle1"
-          align="center"
-          color="text.secondary"
-          component="p"
-        >
-          Something here to give the footer a purpose!
-        </Typography>
-        <Copyright />
-      </Box>
+      <Footer />
       {/* End footer */}
     </ThemeProvider>
   );

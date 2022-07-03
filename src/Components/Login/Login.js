@@ -16,6 +16,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent } from '@mui/material';
 import login from '../../Assets/login.svg';
+import Alert from '@mui/material/Alert';
 
 function Copyright(props) {
   return (
@@ -67,23 +68,28 @@ export default function Login() {
     axios({
       method: 'POST',
       url: "https://0d92-223-178-110-162.in.ngrok.io/user/login/",
-      data : { user : {
+      data : { 
         soe_id : soeid,
         password : password
-      } }
+        
+      }
     })
     .then(response => {
-      console.log(response.data);
-      if(response.data.message === "User Created") {
+      console.log();
+      if(response.status === 200) {
         console.log("User logged in Successfully");
-
+        setisSignedIn(true);
         localStorage.setItem('soeid', response.data.user.soe_id);
         localStorage.setItem('token', response.data.token);
       
-        navigate("/user/" + localStorage.getItem('soeid') + "/edit");
+        navigate("/user/" + localStorage.getItem('soeid'));
       }
     }) 
-    .catch(e => console.log(e));
+    .catch(e => {
+      console.log(e);
+      setisSignedIn(false);
+    }
+     );
   }
     
   return (
@@ -108,7 +114,7 @@ export default function Login() {
             Sign In
           </Typography>
           <Box  noValidate  sx={{ mt: 1 }}>
-            <Grid container spacing={2}>
+            <Grid container spacing={2} >
               <Grid item xs={12} sm={6}>
                 
               </Grid>
@@ -124,6 +130,9 @@ export default function Login() {
                   name="soeid"
                   autoComplete="soeid"
                   value={soeid}
+                  onFocus= {() => {
+                    setisSignedIn(true);
+                  }}
                   onChange= { (e) => {
                         
                         setSoeid(e.target.value);
@@ -160,6 +169,7 @@ export default function Login() {
             >
               Sign In
             </Button>
+            {isSignedIn ?<br /> : <Alert severity="error">Can't login! Wrong credentials.</Alert>}
             <Button
               onClick ={handleRegister}
               type="submit"
