@@ -25,27 +25,22 @@ import { Responses } from './Responses';
 export default function User() {
   
     //const [defaultUser, setdefaultUser] = useState(localStorage.getItem("user"));
-    const [defaultUser, setdefaultUser] = useState("Aditya");
     const [userData, setUserData] = useState(UserData);
     const [isSignedIn, setIsSignedIn] = useState(true);
     const [responses, setResponses] = useState(Responses);
     const navigate = useNavigate();
-    let token = "";
-    let {username} = useParams();
+    let {soeid} = useParams();
     useState(() => {
+      const url = "http://localhost:4000/user/" + soeid;
       const getUser = () => {
-        axios.get("https://0d92-223-178-110-162.in.ngrok.io/user/AK12345")
+        axios.get(url)
         .then(response => {
           console.log(response);
           if(response.status === 200) {
+            setUserData(response.data.user);
             setResponses(response.data.user.responses);
-
-            let tempUserData = [];
-            tempUserData.push(...userData);
-            tempUserData[0].value = response.data.user.first_name;
-            tempUserData[1].value = response.data.user.last_name;
-            tempUserData[2].value = response.data.user.soe_id;
-            setUserData(tempUserData);
+            
+            
           }
         }) 
         .catch(e => {
@@ -53,14 +48,8 @@ export default function User() {
         }
          );
       }
-      //getUser();
-    })
-    const handleEdit = () => {
-        console.log("Edit");
-        navigate("/user/" + username + "/edit");
-    }
-    
-
+      getUser();
+    },[])
     return (
       <div>
         <ResponsiveAppBar props ={isSignedIn} />
@@ -68,7 +57,7 @@ export default function User() {
       
       <div class="row">
           <div class="col-md-3 border-right">
-              <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"></img><span class="font-weight-bold">Edogaru</span><span class="text-black-50">edogaru@mail.com.my</span><span> </span></div>
+              <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"></img><span class="font-weight-bold">{userData.first_name + " " + userData.last_name}</span><span class="text-black-50">{userData.email}</span><span> </span></div>
           </div>
           <div class="col-md-5 border-right">
               <div class="p-3 py-5">
@@ -76,14 +65,14 @@ export default function User() {
                       <h4 class="text-right">Profile</h4>
                   </div>
                   <div class="row mt-2">
-                      {userData.map((user, index) => (
-                        <div class="col-md-6"><label class="labels">{user.label}</label><input type="text" class="form-control" disabled readonly placeholder={user.label} value={user.value} onChange={(e) => {
-                            let tempData = [];
-                            tempData.push(...userData);
-                            tempData[index].a = e.target.value;
-                            setUserData(tempData);
-                        }}></input></div>
-                    ))}
+                  <div class="col-md-6"><label class="labels">SOEID</label><input type="text" class="form-control"  disabled readonly value={userData.soe_id} ></input></div>
+                  <div class="col-md-6"><label class="labels">Region</label><input type="text" class="form-control"  disabled readonly value={userData.region} ></input></div>
+                  
+                  <div class="col-md-6"><label class="labels">Profile</label><input type="text" class="form-control"  disabled readonly value={userData.profile_url} ></input></div>
+                  <div class="col-md-6"><label class="labels">College</label><input type="text" class="form-control"  disabled readonly value={userData.college} ></input></div>
+                  <div class="col-md-6"><label class="labels">Email</label><input type="text" class="form-control"  disabled readonly value={userData.email} ></input></div>
+                  <div class="col-md-12"><label class="labels">Bio</label><input type="text" class="form-control"  disabled readonly value={userData.bio} ></input></div>
+                  
                       
                   </div>
                   <div class="d-flex justify-content-between align-items-center mb-3">
@@ -93,12 +82,17 @@ export default function User() {
                   {responses.map((response, index) => (
                      response.question.type === "descriptive" ? <div class="col-md-12"><label class="labels">{response.question.title}</label><input type="text" class="form-control" placeholder="enter phone number" disabled readonly value={response.answer.response} ></input></div> : 
                     
-                    <div><div class="form-check form-check-inline"> 
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" {...response.question.title.split("/")[0] === response.answer.response ? "checked"  : "disabled"} />
+                     <div class="form-check" >
+                    
+                      <div class="form-check form-check-inline"> 
+                    <input class="form-check-input" type="radio" name={"inLineRadioOptions" + response.question.title}  value={response.question.title.split("/")[0]} checked={response.question.title.split("/")[0] === response.answer.response} 
+                    disabled={response.question.title.split("/")[0] !== response.answer.response}
+                    />
                     <label class="form-check-label" for="inlineRadio1">{response.question.title.split("/")[0]}</label>
                   </div>
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"  {...response.question.title.split("/")[1] === response.answer.response ? "checked" : "disabled"}/>
+                    <input class="form-check-input" type="radio" name={"inLineRadioOptions" + response.question.title}  value={response.question.title.split("/")[1]}  checked={response.question.title.split("/")[1] === response.answer.response}
+                    disabled={response.question.title.split("/")[1] !== response.answer.response} />
                     <label class="form-check-label" for="inlineRadio2">{response.question.title.split("/")[1]}</label>
                   </div></div>
                     
@@ -110,20 +104,11 @@ export default function User() {
                         
                     ))}
                   </div>
-                  <div class="row mt-3">
-                      <div class="col-md-6"><label class="labels">Country</label><input type="text" class="form-control" placeholder="country" value=""></input></div>
-                      <div class="col-md-6"><label class="labels">State/Region</label><input type="text" class="form-control" value="" placeholder="state"></input></div>
-                  </div>
-                  <div class="mt-5 text-center">{username === defaultUser ? <button class="btn btn-primary profile-button" type="button" onClick={handleEdit}>Edit</button> : <br />}</div>
+                  
+                  
               </div>
           </div>
-          <div class="col-md-4">
-              <div class="p-3 py-5">
-                  <div class="d-flex justify-content-between align-items-center experience"><span>Edit Experience</span><span class="border px-3 p-1 add-experience"><i class="fa fa-plus"></i>&nbsp;Experience</span></div><br></br>
-                  <div class="col-md-12"><label class="labels">Experience in Designing</label><input type="text" class="form-control" placeholder="experience" value=""></input></div> <br></br>
-                  <div class="col-md-12"><label class="labels">Additional Details</label><input type="text" class="form-control" placeholder="additional details" value=""></input></div>
-              </div>
-          </div>
+          
       </div>
   </div>
   <Footer />

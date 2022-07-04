@@ -53,24 +53,9 @@ export default function AllUsersPage() {
 
   const navigate = useNavigate();
   const location = useLocation();
-  const [isSignedIn, setIsSignedIn] = useState(false);
-  // useEffect(() => {
-  //   axios
-  //   .get(URL + "authenticate/" , {
-  //     username : localStorage.getIten(username),
-  //     token: token
-  //   })
-  //   .then((response) => {
-  //     setIsSignedIn(response.data.isSignedIn)
-  //     setDefaultUser(response.data.user);
-      
-  //   })
-  //   .catch(function (error) {
-  //     console.log(error);
-  //   });
-  // });
+  const [isSignedIn, setIsSignedIn] = useState(true);
+  
   const [users, setUsers] = useState(tempUsers);
-  const [token, setToken] = useState("");
   const [defaultUser, setDefaultUser] = useState(users[0]);
   const [navigateToNewUser, setNavigateToNewUser] = useState(false);
   const usersContainer = useRef(null);
@@ -85,23 +70,30 @@ export default function AllUsersPage() {
   const handleLogout = () => {
     setIsSignedIn(false);
   }
-
-  function getUsers() {
-    axios
-      .get(URL + "users", {
-        token: token
+  useState(() => {
+    const getUsers = () => {
+      axios({
+        method: 'GET',
+        url: "http://localhost:4000/user",
+        data : {  }
       })
-      .then((response) => {
+      .then(response => {
         console.log(response.data);
-        setUsers(response.data);
+        if(response.status === 200) {
+          
+          setUsers(response.data.users);
+        }
+      }) 
+      .catch(e => {
+        console.log(e);
         
-      })
-      .catch(function (error) {
-        console.log(error);
       });
-  }
-  function goToParticularUser(user){
-    navigate("/user/"+ user.username)
+    }
+    getUsers();
+  },[])
+  
+  function goToParticularUser(id){
+    navigate("/user/"+ id);
   }
   
   function focusOnusersContainer() {
@@ -111,45 +103,6 @@ export default function AllUsersPage() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
         <Header props={isSignedIn}/>
-      
-      {/* ################################################################################# */}
-      {/* <AppBar position="relative">
-        <Toolbar>
-          <Typography variant="h6" color="inherit">
-            Hall of Fame
-          </Typography>
-          
-          <Box
-            m={1}
-            width="100%"
-            display="flex"
-            justifyContent="flex-end"
-            alignItems="flex-end"
-            
-           >
-            {isSignedIn ?
-            <Box>
-            <Button onClick={() => { goToParticularUser(defaultUser)}}  variant="contained" color="primary" sx={{ height: 40 }}>
-              Me
-            </Button>
-            <Button onClick={() => { handleLogout()}}  variant="contained" color="primary" sx={{ height: 40 }}>
-            Logout
-            </Button>
-            </Box>
-             : 
-              <Box> 
-              <Button onClick={() => { handleSignUp()}}  variant="contained" color="primary" sx={{ height: 40 }}>SignUp</Button>
-              <Button onClick={() => { handleSignIn()}}  variant="contained" color="primary" sx={{ height: 40 }}>SignIn</Button>
-              </Box>
-            }
-            
-            
-          </Box>
-      
-         
-        </Toolbar>
-       
-      </AppBar> */}
 
       {/* ################################################################################# */}
       <main>
@@ -194,17 +147,23 @@ export default function AllUsersPage() {
                   sx={{ height: '350px', width: '300px', display: 'flex', flexDirection: 'column', alignItems: 'center', py: 4}}
                 >
                   
-                  <Avatar sx={{ width: 125, height: 125}} alt="Remy Sharp" src={user.imageURL} />
+                  <Avatar sx={{ width: 125, height: 125}} alt="Remy Sharp" src="https://source.unsplash.com/random" />
                   <CardContent sx={{ flexGrow: 1 }}>
                     <Typography gutterBottom variant="h5" component="h2">
-                      {user.username}
+                      {user.soe_id}
                     </Typography>
                     <Typography>
-                      {user.about}
+                      {user.first_name +  " " + user.last_name} 
+                    </Typography>
+                    <Typography>
+                       {user.college}
+                    </Typography>   
+                    <Typography>
+                      {user.bio}
                     </Typography>
                   </CardContent>
                   <CardActions>
-                    <Button onClick ={() => goToParticularUser(user)} sx={{mb:-4}}>View</Button>
+                    <Button onClick ={() => goToParticularUser(user.soe_id)} sx={{mb:-4}}>View</Button>
                     
                   </CardActions>
                 </Card>

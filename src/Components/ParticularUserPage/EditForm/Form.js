@@ -25,63 +25,72 @@ import Footer from '../../Footer/Footer';
 export default function User() {
   
     //const [defaultUser, setdefaultUser] = useState(localStorage.getItem("user"));
-    const [defaultUser, setdefaultUser] = useState("");
-    const [userData, setUserData] = useState(UserData);
     const [questions, setQuestions] = useState(Questions);
     const [answers, setAnswers] = useState([]);
     const [isSignedIn, setIsSignedIn] = useState(true);
     const navigate = useNavigate();
+
    
 
     let {username} = useParams();
     useEffect(() => {
-      // axios({
-      //   method: 'GET',
-      //   url: "https://0d92-223-178-110-162.in.ngrok.io/question/",
-      // })
-      // .then(response => {
-      //   console.log(response.data);
-      //   if(response.status === 200) {
-      //     setQuestions(response.data.questions);
-      //     let tempAnswers = [];
-      //     questions.map(question => {
-      //       tempAnswers.push({
-      //         title : question.title,
-      //         response : ""
-      //       })
-      //     })
-      //     setAnswers(tempAnswers);
-      //     console.log(answers);
-      //   }
-      // }) 
-      // .catch(e => {
-      //   console.log(e);
-      // }
-      //  );
-       loadAnswers();
-    })
+      axios({
+        method: 'GET',
+        url: "http://localhost:4000/question",
+      })
+      .then(response => {
+        console.log(response.data);
+        if(response.status === 200) {
+          setQuestions(response.data.questions);
+        }
+      }) 
+      .catch(e => {
+        console.log(e);
+      }
+       );
+      
+    },[])
+    useEffect(() => {
+      loadAnswers();
+    },[questions])
     const loadAnswers = () => {
       let tempAnswers = [];
           questions.map(question => {
             tempAnswers.push({
               title : question.title,
-              response : ""
+              response : "",
+              type : question.type
             })
           })
+          console.log(tempAnswers);
           setAnswers(tempAnswers);
           console.log(answers);
     }
 
     const handleSubmit = () => {
+      let tempAnswers = [];
+      answers.map(answer => {
+        tempAnswers.push({
+          title : answer.title,
+          response : answer.response
+        })
+      })
+      console.log(tempAnswers);
+    
       axios({
         method: 'POST',
-        url: "https://0d92-223-178-110-162.in.ngrok.io/answer/bulk_upload",
-        data : {answers : answers}
+        url: "http://localhost:4000/answer/bulk_upload",
+        data : {answers : tempAnswers,
+        },
+        headers: {
+          'Authorization': localStorage.getItem('token') 
+        }
       })
       .then(response => {
         console.log();
         if(response.status === 200) {
-          navigate("/users/" + {username});
+          console.log(response);
+          navigate("/user/" + localStorage.getItem('soeid'));
         }
       }) 
       .catch(e => {
@@ -103,63 +112,37 @@ export default function User() {
           <div class="col-md-5 border-right">
               <div class="p-3 py-5">
                   <div class="d-flex justify-content-between align-items-center mb-3">
-                      <h4 class="text-right">Profile</h4>
-                  </div>
-                  <div class="row mt-2">
-                      {userData.map((question, index) => (
-                        <div class="col-md-6"><label class="labels">{question.q}</label><input type="text" class="form-control" placeholder={question.q} value={question.a} onChange={(e) => {
-                            let tempData = [];
-                            tempData.push(...userData);
-                            tempData[index].a = e.target.value;
-                            setUserData(tempData);
-                        }}></input></div>
-                    ))}
-                      
-                  </div>
-                  <div class="d-flex justify-content-between align-items-center mb-3">
                       <h4 class="text-right mt-3">Questionnaire</h4>
                   </div>
                   <div class="row mt-3">
-                  {questions.map((question, index) => (
-
-
-                     question.type === "descriptive" ? <div class="col-md-12"><label class="labels">{question.title}</label><input type="text" class="form-control" placeholder="enter phone number" value="" onChange={(e) => {
-                        let tempQuestions = [];
-                        tempQuestions.push(...questions);
-                        tempQuestions[index].a = e.target.value;
-                        setQuestions(tempQuestions)
+                  {answers.map((answer, index) => (
+                     answer.type === "descriptive" ? <div class="col-md-12"><label class="labels">{answer.title}</label><input type="text" class="form-control" placeholder={answer.label} value={answers.response} onChange={(e) => {
+                        let tempAnswers = [];
+                        tempAnswers.push(...answers);
+                        tempAnswers[index].response = e.target.value;
+                        setAnswers(tempAnswers);
                     }}></input></div> : 
-                    <div><div class="form-check form-check-inline"> 
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"  />
-                    <label class="form-check-label" for="inlineRadio1">{question.title.split("/")[0]}</label>
+                    <div class="form-check" onChange={(e) => {
+                      let tempAnswers = [];
+                      tempAnswers.push(...answers);
+                      tempAnswers[index].response = e.target.value;
+                      setAnswers(tempAnswers);
+                      console.log(answers);
+                    }}>
+                      <div class="form-check form-check-inline"> 
+                    <input class="form-check-input" type="radio" name={"inLineRadioOptions" + answer.title}  value={answer.title.split("/")[0]}  />
+                    <label class="form-check-label" for="inlineRadio1">{answer.title.split("/")[0]}</label>
                   </div>
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2" />
-                    <label class="form-check-label" for="inlineRadio2">{question.title.split("/")[1]}</label>
+                    <input class="form-check-input" type="radio" name={"inLineRadioOptions" + answer.title}  value={answer.title.split("/")[1]} />
+                    <label class="form-check-label" for="inlineRadio2">{answer.title.split("/")[1]}</label>
                   </div></div>
-                
-                
-                
-                
-                
-                
-                        
                     ))}
-                  </div>
-                  <div class="row mt-3">
-                      <div class="col-md-6"><label class="labels">Country</label><input type="text" class="form-control" placeholder="country" value=""></input></div>
-                      <div class="col-md-6"><label class="labels">State/Region</label><input type="text" class="form-control" value="" placeholder="state"></input></div>
                   </div>
                   <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="button" onClick={handleSubmit}>Save Profile</button></div>
               </div>
           </div>
-          <div class="col-md-4">
-              <div class="p-3 py-5">
-                  <div class="d-flex justify-content-between align-items-center experience"><span>Edit Experience</span><span class="border px-3 p-1 add-experience"><i class="fa fa-plus"></i>&nbsp;Experience</span></div><br></br>
-                  <div class="col-md-12"><label class="labels">Experience in Designing</label><input type="text" class="form-control" placeholder="experience" value=""></input></div> <br></br>
-                  <div class="col-md-12"><label class="labels">Additional Details</label><input type="text" class="form-control" placeholder="additional details" value=""></input></div>
-              </div>
-          </div>
+         
       </div>
   </div>
   <Footer />

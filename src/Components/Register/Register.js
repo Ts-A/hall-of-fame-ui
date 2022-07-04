@@ -17,6 +17,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Card, CardContent } from '@mui/material';
 import signup from '../../Assets/signup.svg';
 import Alert from '@mui/material/Alert';
+import createPalette from '@mui/material/styles/createPalette';
 
 function Copyright(props) {
   return (
@@ -60,7 +61,11 @@ export default function Register() {
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [password, setPassword] = useState("");
-  const [validUsername, setValidUsername] = useState(true);
+  const [region, setRegion] = useState("");
+  const [bio, setBio] = useState("");
+  const [college, setCollege] = useState("");
+  const [email, setEmail] = useState("");
+  const [profile, setProfile] = useState("");
   const [isRegistered, setIsRegistered] = useState(true);
   
   const api_url = "http://localhost:4000/";
@@ -72,12 +77,17 @@ export default function Register() {
   const handleSignUp = () => {
     axios({
       method: 'POST',
-      url: "https://0d92-223-178-110-162.in.ngrok.io/user/register",
+      url: "http://localhost:4000/user/register",
       data : { user : {
         soe_id : soeid,
         first_name : firstname,
         last_name: lastname,
-        password : password
+        password : password,
+        region: region,
+        bio: bio,
+        college: college,
+        profile_url: profile,
+        email: email
       } }
     })
     .then(response => {
@@ -164,7 +174,6 @@ export default function Register() {
 
                   }}
                 />
-                <p > {validUsername ? "" : "Invalid Username"}</p>
               </Grid>
               <Grid item xs={12} style={{marginTop: "-15px"}}>
                 <TextField
@@ -178,6 +187,75 @@ export default function Register() {
                   value = {password}
                   onChange= { (e) => {
                     setPassword(e.target.value);
+                    }}
+                />
+              </Grid>
+              <Grid item xs={12} >
+                <TextField
+                  required
+                  fullWidth
+                  name="region"
+                  label="region"
+                  id="region"
+                  autoComplete="region"
+                  value = {region}
+                  onChange= { (e) => {
+                    setRegion(e.target.value);
+                    }}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="bio"
+                  label="bio" 
+                  id="bio"
+                  autoComplete="bio"
+                  value = {bio}
+                  onChange= { (e) => {
+                    setBio(e.target.value);
+                    }}
+                />
+              </Grid>
+              <Grid item xs={12} >
+                <TextField
+                  required
+                  fullWidth
+                  name="college"
+                  label="college"
+                  id="college"
+                  value = {college}
+                  onChange= { (e) => {
+                    setCollege(e.target.value);
+                    }}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="email"
+                  label="email"
+                  type="email"
+                  id="email"
+                  value = {email}
+                  onChange= { (e) => {
+                    setEmail(e.target.value);
+                    }}
+                />
+              </Grid>
+              <Grid item xs={12} >
+                <TextField
+                  required
+                  fullWidth
+                  name="profile"
+                  label="profile"
+                  type="profile"
+                  id="profile"
+                  value = {profile}
+                  onChange= { (e) => {
+                    setProfile(e.target.value);
                     }}
                 />
               </Grid>

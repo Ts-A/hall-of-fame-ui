@@ -1,22 +1,20 @@
 export  const tempUsers = [
     {
-        username : "Aditya",
-        id : 1,
-        about : "Civil Major, only knows HTML",
-        imageURL : "https://source.unsplash.com/random"
+        "soe_id": "AT33293",
+        "first_name": "noob",
+        "last_name": "T S",
+        "region": "Pune",
+        "bio": "The Inevitable",
+        "college": "NIT T",
+        "profile_url": "https://google.com"
     },
     {
-        username : "Amritansh", 
-        id : 2,
-        about: "Cse Major, only do timepass",
-        imageURL : "https://source.unsplash.com/random"
-    }, 
-    {
-        username : "Ansh",
-        id : 3,
-        about: "Civil Major again, but decent this time",
-        imageURL : "https://source.unsplash.com/random"
-        
+        "soe_id": "AD32403",
+        "first_name": "Amritansh",
+        "last_name": "Dixit",
+        "region": "Patna City",
+        "bio": "Nerd",
+        "college": "VNIT, Nagpur",
+        "profile_url": "instagram/amritj7"
     }
-
 ]
