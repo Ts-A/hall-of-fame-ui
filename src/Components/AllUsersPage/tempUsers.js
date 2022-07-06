@@ -6,7 +6,8 @@ export  const tempUsers = [
         "region": "Pune",
         "bio": "The Inevitable",
         "college": "NIT T",
-        "profile_url": "https://google.com"
+        "profile_url": "https://google.com",
+        "display_picture" : ""
     },
     {
         "soe_id": "AD32403",
@@ -15,6 +16,7 @@ export  const tempUsers = [
         "region": "Patna City",
         "bio": "Nerd",
         "college": "VNIT, Nagpur",
-        "profile_url": "instagram/amritj7"
+        "profile_url": "instagram/amritj7",
+        "display_picture" : ""
     }
 ]

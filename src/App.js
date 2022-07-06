@@ -5,7 +5,7 @@ import AllUsersPage from "./Components/AllUsersPage/AllUsersPage.js";
 import Login from "./Components/Login/Login";
 import Register from "./Components/Register/Register";
 import Form from "./Components/ParticularUserPage/EditForm/Form";
-import User from "./Components/ParticularUserPage/Form/User";
+import User from "./Components/ParticularUserPage/User/User";
 import NotFound from "./Components/NotFound/PageNotFound";
 
 

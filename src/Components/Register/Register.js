@@ -68,7 +68,6 @@ export default function Register() {
   const [profile, setProfile] = useState("");
   const [isRegistered, setIsRegistered] = useState(true);
   
-  const api_url = "http://localhost:4000/";
 
   const handleLogin = () => {
     navigate("/login");
@@ -77,7 +76,7 @@ export default function Register() {
   const handleSignUp = () => {
     axios({
       method: 'POST',
-      url: "http://localhost:4000/user/register",
+      url: "http://ec2-3-109-213-26.ap-south-1.compute.amazonaws.com/register",
       data : { user : {
         soe_id : soeid,
         first_name : firstname,

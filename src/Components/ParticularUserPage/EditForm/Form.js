@@ -5,7 +5,7 @@ import Avatar from '@mui/material/Avatar';
 import axios from "axios";
 import "./module.css";
 import { Questions } from './Questions';
-import { UserData } from './UserData';
+
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
@@ -19,6 +19,7 @@ import { InputLabel, Radio, RadioGroup } from '@mui/material';
 import { useNavigate, useLocation, Navigate, useParams } from "react-router-dom";
 import ResponsiveAppBar from '../../Header/ResponsiveAppBar';
 import Footer from '../../Footer/Footer';
+import ImageUpload from './ImageUpload';
 
 
 
@@ -29,14 +30,15 @@ export default function User() {
     const [answers, setAnswers] = useState([]);
     const [isSignedIn, setIsSignedIn] = useState(true);
     const navigate = useNavigate();
+    
 
    
 
-    let {username} = useParams();
+    let {soeid} = useParams();
     useEffect(() => {
       axios({
         method: 'GET',
-        url: "http://localhost:4000/question",
+        url: "http://ec2-3-109-213-26.ap-south-1.compute.amazonaws.com/question",
       })
       .then(response => {
         console.log(response.data);
@@ -79,7 +81,7 @@ export default function User() {
     
       axios({
         method: 'POST',
-        url: "http://localhost:4000/answer/bulk_upload",
+        url: "http://ec2-3-109-213-26.ap-south-1.compute.amazonaws.com/bulk_upload",
         data : {answers : tempAnswers,
         },
         headers: {
@@ -107,7 +109,9 @@ export default function User() {
       
       <div class="row">
           <div class="col-md-3 border-right">
-              <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"></img><span class="font-weight-bold">Edogaru</span><span class="text-black-50">edogaru@mail.com.my</span><span> </span></div>
+              
+              <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+              <ImageUpload /><span class="text-black-50">{}</span>{soeid}<span> </span></div>
           </div>
           <div class="col-md-5 border-right">
               <div class="p-3 py-5">

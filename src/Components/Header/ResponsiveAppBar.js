@@ -45,9 +45,16 @@ const ResponsiveAppBar = (props) => {
   };
 
   const handleCloseUserMenuLogout = () => {
-    setAnchorElUser(null);
-    navigate("/login");
+    localStorage.removeItem('token');
+    localStorage.removeItem('soeid');
+    window.location.reload(false);
   };
+  const handleLogin = () => {
+    navigate("/login");
+  }
+  const handleSignUp = () => {
+    navigate("/register");
+  }
 
   return (
     <AppBar position="static">
@@ -162,13 +169,24 @@ const ResponsiveAppBar = (props) => {
               onClose={handleCloseUserMenu}
             >
               
-              <MenuItem onClick={handleCloseUserMenuProfile}>
+             
+              {
+                localStorage.getItem('token') ?<div>
+                   <MenuItem onClick={handleCloseUserMenuProfile}>
                   <Typography textAlign="center">Profile</Typography>
               </MenuItem>
-
-                <MenuItem onClick={handleCloseUserMenuLogout}>
-                  <Typography textAlign="center">{props.isSignedIn ? "Logout" : "Login" }</Typography>
-                </MenuItem>
+                  <MenuItem onClick={handleCloseUserMenuLogout}>
+                <Typography textAlign="center">Logout</Typography>
+              </MenuItem></div>  :
+                <div><MenuItem onClick={handleLogin}>
+                  <Typography textAlign="center">Login</Typography>
+              </MenuItem>
+              <MenuItem onClick={handleSignUp}>
+                  <Typography textAlign="center">SignUp</Typography>
+              </MenuItem>
+              </div>
+              }
+                
              
             </Menu>
           </Box>

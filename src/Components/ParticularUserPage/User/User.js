@@ -4,7 +4,6 @@ import React, {useState, useEffect, useRef} from 'react';
 import Avatar from '@mui/material/Avatar';
 import axios from "axios";
 import "./module.css";
-import { UserData } from './UserData';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
@@ -25,13 +24,13 @@ import { Responses } from './Responses';
 export default function User() {
   
     //const [defaultUser, setdefaultUser] = useState(localStorage.getItem("user"));
-    const [userData, setUserData] = useState(UserData);
+    const [userData, setUserData] = useState([]);
     const [isSignedIn, setIsSignedIn] = useState(true);
     const [responses, setResponses] = useState(Responses);
     const navigate = useNavigate();
     let {soeid} = useParams();
     useState(() => {
-      const url = "http://localhost:4000/user/" + soeid;
+      const url = "http://ec2-3-109-213-26.ap-south-1.compute.amazonaws.com/user/" + soeid;
       const getUser = () => {
         axios.get(url)
         .then(response => {
@@ -50,6 +49,7 @@ export default function User() {
       }
       getUser();
     },[])
+
     return (
       <div>
         <ResponsiveAppBar props ={isSignedIn} />
@@ -57,7 +57,7 @@ export default function User() {
       
       <div class="row">
           <div class="col-md-3 border-right">
-              <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"></img><span class="font-weight-bold">{userData.first_name + " " + userData.last_name}</span><span class="text-black-50">{userData.email}</span><span> </span></div>
+              <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src={userData.display_picture ? userData.display_picture : "" }></img><span class="font-weight-bold">{userData.first_name + " " + userData.last_name}</span><span class="text-black-50">{userData.email}</span><span> </span></div>
           </div>
           <div class="col-md-5 border-right">
               <div class="p-3 py-5">
@@ -80,11 +80,12 @@ export default function User() {
                   </div>
                   <div class="row mt-3">
                   {responses.map((response, index) => (
-                     response.question.type === "descriptive" ? <div class="col-md-12"><label class="labels">{response.question.title}</label><input type="text" class="form-control" placeholder="enter phone number" disabled readonly value={response.answer.response} ></input></div> : 
+                     response.question.type === "descriptive" ? <div class="col-md-12 m-2"><label class="labels">{response.question.title}</label><input type="text" class="form-control" placeholder="enter phone number" disabled readonly value={response.answer.response} ></input></div> : 
                     
-                     <div class="form-check" >
-                    
-                      <div class="form-check form-check-inline"> 
+                     <div class="form-check m-2" >
+              
+                      <div class="form-check form-check-inline">
+                        
                     <input class="form-check-input" type="radio" name={"inLineRadioOptions" + response.question.title}  value={response.question.title.split("/")[0]} checked={response.question.title.split("/")[0] === response.answer.response} 
                     disabled={response.question.title.split("/")[0] !== response.answer.response}
                     />

@@ -53,7 +53,7 @@ export default function AllUsersPage() {
 
   const navigate = useNavigate();
   const location = useLocation();
-  const [isSignedIn, setIsSignedIn] = useState(true);
+  const [isSignedIn, setIsSignedIn] = useState(false);
   
   const [users, setUsers] = useState(tempUsers);
   const [defaultUser, setDefaultUser] = useState(users[0]);
@@ -74,7 +74,7 @@ export default function AllUsersPage() {
     const getUsers = () => {
       axios({
         method: 'GET',
-        url: "http://localhost:4000/user",
+        url: "http://ec2-3-109-213-26.ap-south-1.compute.amazonaws.com/user",
         data : {  }
       })
       .then(response => {
@@ -133,7 +133,7 @@ export default function AllUsersPage() {
               spacing={2}
               justifyContent="center"
             >
-              <Button variant="contained" color="primary" onClick={() => {isSignedIn ? goToParticularUser(defaultUser) : handleSignIn() }}>Ready to answer some questions?</Button>
+              <Button variant="contained" color="primary" onClick={() => handleSignUp()}>Ready to answer some questions?</Button>
               <Button onClick={() => {focusOnusersContainer()}} variant="outlined">I am scared. Let's see some examples, shall we?</Button>
             </Stack>
           </Container>
@@ -147,7 +147,7 @@ export default function AllUsersPage() {
                   sx={{ height: '350px', width: '300px', display: 'flex', flexDirection: 'column', alignItems: 'center', py: 4}}
                 >
                   
-                  <Avatar sx={{ width: 125, height: 125}} alt="Remy Sharp" src="https://source.unsplash.com/random" />
+                  <Avatar sx={{ width: 125, height: 125}} alt="Remy Sharp" src={user.display_pictue ? user.display_pictue : "https://source.unsplash.com/random"} />
                   <CardContent sx={{ flexGrow: 1 }}>
                     <Typography gutterBottom variant="h5" component="h2">
                       {user.soe_id}
