@@ -68,7 +68,7 @@ export default function Login() {
   const handleSignIn = (event) => {
     axios({
       method: 'POST',
-      url: "http://ec2-3-109-213-26.ap-south-1.compute.amazonaws.com/login",
+      url: "http://ec2-43-204-149-158.ap-south-1.compute.amazonaws.com/user/login",
       data : { 
         soe_id : soeid,
         password : password

@@ -78,9 +78,10 @@ export default function PhotoUpload(){
 
       const formData = new FormData();
       formData.append("display_picture", file);
+      setIsUploaded(true);
       axios({
           method: 'POST',
-          url: "http://localhost:4000/user/image-upload",
+          url: "http://ec2-43-204-149-158.ap-south-1.compute.amazonaws.com/user/image-upload",
           data : formData,
           headers: {
             'Authorization': localStorage.getItem('token') 
@@ -91,7 +92,7 @@ export default function PhotoUpload(){
           if(response.status === 200) {
             console.log(response);
             console.log("Image Uploaded Successfully");
-            setIsUploaded(true);
+            
             //replace with URL to user page########################################
             navigate("/user/" + localStorage.getItem('soeid') + "/edit")
           }
@@ -118,9 +119,9 @@ export default function PhotoUpload(){
           }}
         >
           <img src={uploadImage} width="300px" height="500px"  style={{marginTop:"-100px", marginBottom:"-100px"}}/>
-          <Typography component="h1" variant="h5">
+          {isUploaded ? "" : <Typography component="h1" variant="h5">
             Upload Photo
-          </Typography>
+          </Typography>}
           <Box  noValidate  sx={{ mt: 1 }}>
             <Grid container spacing={2} >
               <Grid item xs={12} sm={6}>

@@ -76,7 +76,7 @@ export default function AllUsersPage() {
     const getUsers = () => {
       axios({
         method: 'GET',
-        url: "http://ec2-3-109-213-26.ap-south-1.compute.amazonaws.com/user",
+        url: "http://ec2-43-204-149-158.ap-south-1.compute.amazonaws.com/user",
         data : {  }
       })
       .then(response => {
@@ -100,6 +100,15 @@ export default function AllUsersPage() {
   
   function focusOnusersContainer() {
     usersContainer.current.focus();
+  
+  }
+
+  const handleProfile = () => {
+    if(localStorage.getItem('token')) {
+      navigate("/user/" + localStorage.getItem('soeid'));
+    }
+    else
+    navigate("/register");
   }
   return (
     <ThemeProvider theme={theme}>
@@ -135,8 +144,8 @@ export default function AllUsersPage() {
               spacing={2}
               justifyContent="center"
             >
-              <Button variant="contained" color="primary" onClick={() => handleSignUp()}>Ready to answer some questions?</Button>
-              <Button onClick={scrollToElement} variant="outlined">I am scared. Let's see some examples, shall we?</Button>
+              <Button variant="contained" color="primary" onClick={() => handleProfile()}>{localStorage.getItem('token') ? "View Your Profile": "Ready to answer some questions?" }</Button>
+              {/* <Button onClick={scrollToElement} variant="outlined">I am scared. Let's see some examples, shall we?</Button> */}
             </Stack>
           </Container>
         </Box>
@@ -149,7 +158,7 @@ export default function AllUsersPage() {
                   sx={{ height: '350px', width: '300px', display: 'flex', flexDirection: 'column', alignItems: 'center', py: 4}}
                 >
                   
-                  <Avatar sx={{ width: 125, height: 125}} alt="Remy Sharp" src={user.display_pictue ? user.display_pictue : "https://source.unsplash.com/random"} />
+                  <Avatar sx={{ width: 125, height: 125}} alt="Remy Sharp" src={user.display_picture ? user.display_picture : "https://source.unsplash.com/random"} />
                   <CardContent sx={{ flexGrow: 1 }}>
                     <Typography gutterBottom variant="h5" component="h2">
                       {user.soe_id}

@@ -38,7 +38,7 @@ export default function User() {
     
     let {soeid} = useParams();
     useState(() => {
-      const url = "http://ec2-3-109-213-26.ap-south-1.compute.amazonaws.com/user/" + soeid;
+      const url = "http://ec2-43-204-149-158.ap-south-1.compute.amazonaws.com/user/" + soeid;
       const getUser = () => {
         axios.get(url)
         .then(response => {

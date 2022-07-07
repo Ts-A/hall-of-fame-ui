@@ -75,7 +75,7 @@ const ResponsiveAppBar = (props) => {
   const handleCloseUserMenuLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('soeid');
-    window.location.reload(false);
+    navigate("/");
   };
   const handleLogin = () => {
     navigate("/login");

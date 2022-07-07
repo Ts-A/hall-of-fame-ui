@@ -29,7 +29,9 @@ export default function User() {
     const [defaultUser, setdefaultUser] = useState(localStorage.getItem("user"));
     const [questions, setQuestions] = useState(Questions);
     const [answers, setAnswers] = useState([]);
+    const [userData, setUserData] = useState([]);
     const [isSignedIn, setIsSignedIn] = useState(true);
+    const [, updateState] = React.useState();
     const navigate = useNavigate();
     
     let props = {
@@ -62,9 +64,28 @@ export default function User() {
    
     let {soeid} = useParams();
     useEffect(() => {
+      const back_url = "http://ec2-43-204-149-158.ap-south-1.compute.amazonaws.com/user/" + soeid;
       axios({
         method: 'GET',
-        url: "http://ec2-3-109-213-26.ap-south-1.compute.amazonaws.com/question",
+        url: back_url
+      })
+      .then(response => {
+        console.log(response.data);
+        if(response.status === 200) {
+          setUserData(response.data.user);
+
+        }
+      }) 
+      .catch(e => {
+        console.log(e);
+        navigate("/notfound");
+      }
+       );
+    },[])
+    useEffect(() => {
+      axios({
+        method: 'GET',
+        url: "http://ec2-43-204-149-158.ap-south-1.compute.amazonaws.com/question",
       })
       .then(response => {
         console.log(response.data);
@@ -80,21 +101,30 @@ export default function User() {
     },[])
     useEffect(() => {
       loadAnswers();
-    },[questions])
+    },[userData],[questions])
+    // useEffect(() => {
+    //   updateState({});
+    // },answers)
     const loadAnswers = () => {
       let tempAnswers = [];
           questions.map(question => {
+            let tempanswer = "";
+            if(userData.responses){
+              userData.responses.map((res) => {
+                if(res.question.title === question.title)
+                  tempanswer = res.answer.response;
+              })
+            }
             tempAnswers.push({
               title : question.title,
-              response : "",
+              response : tempanswer,
               type : question.type
             })
           })
-          console.log(tempAnswers);
           setAnswers(tempAnswers);
           console.log(answers);
     }
-
+    
     const handleSubmit = () => {
       let tempAnswers = [];
       answers.map(answer => {
@@ -107,7 +137,7 @@ export default function User() {
     
       axios({
         method: 'POST',
-        url: "http://ec2-3-109-213-26.ap-south-1.compute.amazonaws.com/bulk_upload",
+        url: "http://ec2-43-204-149-158.ap-south-1.compute.amazonaws.com/answer/bulk_upload",
         data : {answers : tempAnswers,
         },
         headers: {
@@ -138,7 +168,7 @@ export default function User() {
           <div class="col-md-3 border-right">
               
               <div class="d-flex flex-column align-items-center text-center p-3 py-5">
-              <ImageUpload /><span class="text-black-50">{}</span>{soeid}<span> </span>
+              {/* <ImageUpload /><span class="text-black-50">{}</span>{soeid}<span> </span> */}
               </div>
           </div>
           <div class="col-md-6 border-right">
@@ -150,13 +180,14 @@ export default function User() {
                   </div>
                   <div class="row mt-3">
                   {answers.map((answer, index) => (
-                     answer.type === "descriptive" ? <div class="col-md-12"><label class="labels">{answer.title}</label><input type="text" class="form-control" placeholder={answer.label} value={answers.response} onChange={(e) => {
+                     answer.type === "descriptive" ? <div class="col-md-12"><label class="labels">{answer.title}</label><input type="text" class="form-control" placeholder={answer.label} value={answer.response} onChange={(e) => {
+                        console.log(answers);
                         let tempAnswers = [];
                         tempAnswers.push(...answers);
                         tempAnswers[index].response = e.target.value;
                         setAnswers(tempAnswers);
                     }}></input></div> : 
-                    <div class="form-check" onChange={(e) => {
+                    <div class="form-check" value={answer.response} onChange={(e) => {
                       let tempAnswers = [];
                       tempAnswers.push(...answers);
                       tempAnswers[index].response = e.target.value;
