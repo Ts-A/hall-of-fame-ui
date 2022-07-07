@@ -81,7 +81,7 @@ export default function PhotoUpload(){
       setIsUploaded(true);
       axios({
           method: 'POST',
-          url: "http://ec2-43-204-149-158.ap-south-1.compute.amazonaws.com/user/image-upload",
+          url: "http://hall-of-fame-server-hall-of-fame-server.linuxops-pune-a2.conygre.com/user/image-upload",
           data : formData,
           headers: {
             'Authorization': localStorage.getItem('token') 

@@ -77,7 +77,7 @@ export default function Register() {
   const handleSignUp = () => {
     axios({
       method: 'POST',
-      url: "http://ec2-43-204-149-158.ap-south-1.compute.amazonaws.com/user/register",
+      url: "http://hall-of-fame-server-hall-of-fame-server.linuxops-pune-a2.conygre.com/user/register",
       data : { user : {
         soe_id : soeid,
         first_name : firstname,
