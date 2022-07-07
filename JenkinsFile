@@ -3,18 +3,11 @@ pipeline{
 	agent any
 
 	environment {
-		DOCKERHUB_CREDENTIALS=credentials('DockerHub')
+		DOCKERHUB_CREDENTIALS=credentials('dockerhub')
 	}
 
 	stages {
 	    
-	    stage('gitclone') {
-
-			steps {
-				git 'https://amritj7@bitbucket.org/amigos-6/hall-of-fame-ui.git'
-			}
-		}
-
 		stage('Build') {
 
 			steps {
