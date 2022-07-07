@@ -59,7 +59,7 @@ export default function AllUsersPage() {
   const [defaultUser, setDefaultUser] = useState(users[0]);
   const [navigateToNewUser, setNavigateToNewUser] = useState(false);
   const usersContainer = useRef(null);
-  
+  const viewRef = useRef(null);
 
   const handleSignUp = () => {
     navigate("/register");
@@ -70,6 +70,8 @@ export default function AllUsersPage() {
   const handleLogout = () => {
     setIsSignedIn(false);
   }
+  const scrollToElement = () => viewRef.current.scrollIntoView();
+  
   useState(() => {
     const getUsers = () => {
       axios({
@@ -134,11 +136,11 @@ export default function AllUsersPage() {
               justifyContent="center"
             >
               <Button variant="contained" color="primary" onClick={() => handleSignUp()}>Ready to answer some questions?</Button>
-              <Button onClick={() => {focusOnusersContainer()}} variant="outlined">I am scared. Let's see some examples, shall we?</Button>
+              <Button onClick={scrollToElement} variant="outlined">I am scared. Let's see some examples, shall we?</Button>
             </Stack>
           </Container>
         </Box>
-        <Container ref= {usersContainer} sx={{ py: 10 }} maxWidth="md">
+        <Container ref= {viewRef} sx={{ py: 10 }} maxWidth="md">
           {/* End hero unit */}
           <Grid container spacing={10}>
             {users.map((user, index) => (

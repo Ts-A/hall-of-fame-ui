@@ -35,7 +35,7 @@ function Footer() {
   return (
     <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer">
         <Typography variant="h6" align="center" gutterBottom>
-          Footer
+          Terms of Use
         </Typography>
         <Typography
           variant="subtitle1"
@@ -43,7 +43,7 @@ function Footer() {
           color="text.secondary"
           component="p"
         >
-          Something here to give the footer a purpose!
+          Note that this data will not be shared with Citi.
         </Typography>
         <Copyright />
       </Box>

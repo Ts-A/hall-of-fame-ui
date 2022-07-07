@@ -12,6 +12,8 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import Checkbox from '@mui/material/Checkbox';
 import { InputLabel, Radio, RadioGroup } from '@mui/material';
+import FaceIcon from '@mui/icons-material/Face';
+import HelpIcon from '@mui/icons-material/Help';
 
 import ResponsiveAppBar from '../../Header/ResponsiveAppBar';
 import { useNavigate, useLocation, Navigate, useParams } from "react-router-dom";
@@ -23,11 +25,17 @@ import { Responses } from './Responses';
 
 export default function User() {
   
-    //const [defaultUser, setdefaultUser] = useState(localStorage.getItem("user"));
+    const [defaultUser, setdefaultUser] = useState(localStorage.getItem("user"));
     const [userData, setUserData] = useState([]);
     const [isSignedIn, setIsSignedIn] = useState(true);
     const [responses, setResponses] = useState(Responses);
     const navigate = useNavigate();
+    let props = {
+      isSignedIn: isSignedIn,
+      bgColor: '#ffffff',
+      textColor: '#7584C3'
+    };
+    
     let {soeid} = useParams();
     useState(() => {
       const url = "http://ec2-3-109-213-26.ap-south-1.compute.amazonaws.com/user/" + soeid;
@@ -52,7 +60,7 @@ export default function User() {
 
     return (
       <div>
-        <ResponsiveAppBar props ={isSignedIn} />
+        <ResponsiveAppBar {...props} />
       <div class="container rounded bg-white mt-5 mb-5">
       
       <div class="row">
@@ -62,7 +70,14 @@ export default function User() {
           <div class="col-md-5 border-right">
               <div class="p-3 py-5">
                   <div class="d-flex justify-content-between align-items-center mb-3">
+                  <Grid container spacing={2}>
+                  <Grid item xs={5} sm={2}>
                       <h4 class="text-right">Profile</h4>
+                  </Grid>
+                  <Grid item xs={5} sm={3}>
+                    <FaceIcon/>
+                  </Grid>
+                  </Grid>
                   </div>
                   <div class="row mt-2">
                   <div class="col-md-6"><label class="labels">SOEID</label><input type="text" class="form-control"  disabled readonly value={userData.soe_id} ></input></div>
@@ -76,9 +91,17 @@ export default function User() {
                       
                   </div>
                   <div class="d-flex justify-content-between align-items-center mb-3">
+                  <Grid container spacing={1} alignItems="center">
+                  <Grid item xs={7} sm={4.5}>
                       <h4 class="text-right mt-3">Questionnaire</h4>
+                  </Grid>
+                  <Grid item xs={7} sm={1}>
+                    <HelpIcon xs={{}}/>
+                  </Grid>
+                  </Grid>
                   </div>
                   <div class="row mt-3">
+                 
                   {responses.map((response, index) => (
                      response.question.type === "descriptive" ? <div class="col-md-12 m-2"><label class="labels">{response.question.title}</label><input type="text" class="form-control" placeholder="enter phone number" disabled readonly value={response.answer.response} ></input></div> : 
                     

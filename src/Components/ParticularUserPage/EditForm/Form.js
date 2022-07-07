@@ -13,27 +13,53 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import Checkbox from '@mui/material/Checkbox';
-import { InputLabel, Radio, RadioGroup } from '@mui/material';
+import { Button, createTheme, InputLabel, Radio, RadioGroup, ThemeProvider } from '@mui/material';
 
 
 import { useNavigate, useLocation, Navigate, useParams } from "react-router-dom";
 import ResponsiveAppBar from '../../Header/ResponsiveAppBar';
 import Footer from '../../Footer/Footer';
 import ImageUpload from './ImageUpload';
+import Questionnaire from '../../../Assets/questionnaire.svg';
 
 
 
 export default function User() {
   
-    //const [defaultUser, setdefaultUser] = useState(localStorage.getItem("user"));
+    const [defaultUser, setdefaultUser] = useState(localStorage.getItem("user"));
     const [questions, setQuestions] = useState(Questions);
     const [answers, setAnswers] = useState([]);
     const [isSignedIn, setIsSignedIn] = useState(true);
     const navigate = useNavigate();
     
+    let props = {
+      isSignedIn: isSignedIn,
+      bgColor: '#ffffff',
+      textColor: '#7584C3'
+    };
 
+    const theme = createTheme({
+      typography: {
+        fontFamily: [
+          '-apple-system',
+          'BlinkMacSystemFont',
+          '"Segoe UI"',
+          'Roboto',
+          '"Helvetica Neue"',
+          'Arial',
+          'sans-serif',
+          '"Apple Color Emoji"',
+          '"Segoe UI Emoji"',
+          '"Segoe UI Symbol"',
+        ].join(','),
+      },
+      palette:{
+        primary:{
+          main: '#7584c3'
+        }
+      }
+    });
    
-
     let {soeid} = useParams();
     useEffect(() => {
       axios({
@@ -104,19 +130,23 @@ export default function User() {
 
     return ( 
       <div>
-        <ResponsiveAppBar props={isSignedIn}/>
+        <ResponsiveAppBar {...props}/>
+      <ThemeProvider theme={theme}>
     <div class="container rounded bg-white mt-5 mb-5">
       
       <div class="row">
           <div class="col-md-3 border-right">
               
               <div class="d-flex flex-column align-items-center text-center p-3 py-5">
-              <ImageUpload /><span class="text-black-50">{}</span>{soeid}<span> </span></div>
+              <ImageUpload /><span class="text-black-50">{}</span>{soeid}<span> </span>
+              </div>
           </div>
-          <div class="col-md-5 border-right">
+          <div class="col-md-6 border-right">
               <div class="p-3 py-5">
-                  <div class="d-flex justify-content-between align-items-center mb-3">
-                      <h4 class="text-right mt-3">Questionnaire</h4>
+                  
+                  <img src={Questionnaire} width="300px" height="500px"  style={{marginTop:"-150px", marginBottom:"-100px", marginLeft:"120px"}}/>
+                  <div class="d-flex justify-content-between align-items-center mb-3">    
+                      <Typography component="h1" variant="h5" sx={{ml:25}}>Questionnaire</Typography>
                   </div>
                   <div class="row mt-3">
                   {answers.map((answer, index) => (
@@ -143,21 +173,31 @@ export default function User() {
                   </div></div>
                     ))}
                   </div>
-                  <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="button" onClick={handleSubmit}>Save Profile</button></div>
+                  {/* <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="button">Save Profile</button></div> */}
+                  <Button
+                    onClick={handleSubmit}
+                    type="submit"
+                    variant="contained"
+                    sx={{ mt: 5, mb: 0, ml:27 }}
+                  >
+                    Save Profile
+                  </Button>
               </div>
           </div>
          
       </div>
   </div>
+
   <Footer />
+  </ThemeProvider>
       </div>
       
    
   );
 }
 
-
-
+//====================================================
+// onClick={handleSubmit}
 
 // {defaultUser !== username ? <Button variant="contained" onClick={(
           

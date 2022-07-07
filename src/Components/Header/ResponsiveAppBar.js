@@ -14,11 +14,39 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import CelebrationIcon from '@mui/icons-material/Celebration';
 import { useNavigate, useLocation } from "react-router-dom";
+import { createTheme, ThemeProvider } from '@mui/material';
 
 const pages = [];
 const settings = ['Profile', 'Logout'];
 
+
+
 const ResponsiveAppBar = (props) => {
+
+
+
+  const theme = createTheme({
+    typography: {
+      fontFamily: [
+        '-apple-system',
+        'BlinkMacSystemFont',
+        '"Segoe UI"',
+        'Roboto',
+        '"Helvetica Neue"',
+        'Arial',
+        'sans-serif',
+        '"Apple Color Emoji"',
+        '"Segoe UI Emoji"',
+        '"Segoe UI Symbol"',
+      ].join(','),
+    },
+    palette:{
+      primary:{
+        main: props.bgColor ? props.bgColor : '#7584C3'
+      }
+    }
+  });
+
   const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -57,10 +85,12 @@ const ResponsiveAppBar = (props) => {
   }
 
   return (
+    <ThemeProvider theme={theme}>
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <CelebrationIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+          <CelebrationIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1,
+                            color: props.textColor ? props.textColor : 'inherit'}} />
           <Typography
             variant="h6"
             noWrap
@@ -72,7 +102,7 @@ const ResponsiveAppBar = (props) => {
               fontFamily: 'monospace',
               fontWeight: 700,
               letterSpacing: '.3rem',
-              color: 'inherit',
+              color: props.textColor ? props.textColor : 'inherit',
               textDecoration: 'none',
             }}
           >
@@ -193,6 +223,7 @@ const ResponsiveAppBar = (props) => {
         </Toolbar>
       </Container>
     </AppBar>
+    </ThemeProvider>
   );
 };
 export default ResponsiveAppBar;

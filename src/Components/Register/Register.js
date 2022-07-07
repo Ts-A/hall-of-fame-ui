@@ -18,6 +18,7 @@ import { Card, CardContent } from '@mui/material';
 import signup from '../../Assets/signup.svg';
 import Alert from '@mui/material/Alert';
 import createPalette from '@mui/material/styles/createPalette';
+import Footer from '../Footer/Footer';
 
 function Copyright(props) {
   return (
@@ -97,7 +98,8 @@ export default function Register() {
         localStorage.setItem('soeid', response.data.user.soe_id);
         localStorage.setItem('token', response.data.token);
       
-        navigate("/user/" + localStorage.getItem('soeid') + "/edit");
+        navigate("/user/upload");
+        // navigate("/user/" + localStorage.getItem('soeid') + "/edit");
       }
     }) 
     .catch(e => {
@@ -292,7 +294,7 @@ export default function Register() {
         </Box>
         </CardContent>
         </Card>
-        <Copyright sx={{ mt: 5 }} />
+        <Footer/>
       </Container>
     </ThemeProvider>
   );

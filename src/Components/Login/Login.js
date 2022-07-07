@@ -17,6 +17,7 @@ import { useNavigate } from "react-router-dom";
 import { Card, CardContent } from '@mui/material';
 import login from '../../Assets/login.svg';
 import Alert from '@mui/material/Alert';
+import Footer from '../Footer/Footer';
 
 function Copyright(props) {
   return (
@@ -193,7 +194,7 @@ export default function Login() {
         </Box>
         </CardContent>
         </Card>
-        <Copyright sx={{ mt: 5 }} />
+        <Footer/>
       </Container>
 
     </ThemeProvider>
