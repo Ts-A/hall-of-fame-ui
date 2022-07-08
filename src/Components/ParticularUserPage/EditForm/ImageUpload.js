@@ -17,7 +17,7 @@ function ImageUpload(){
         formData.append("display_picture", file);
         axios({
             method: 'POST',
-            url: "http://hall-of-fame-server-hall-of-fame-server.linuxops-pune-a2.conygre.com/user/image-upload",
+            url: "https://hall-of-fame-server-hall-of-fame-server.linuxops-pune-a2.conygre.com/user/image-upload",
             data : formData,
             headers: {
               'Authorization': localStorage.getItem('token') 

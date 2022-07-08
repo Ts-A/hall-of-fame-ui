@@ -38,7 +38,7 @@ export default function User() {
     
     let {soeid} = useParams();
     useState(() => {
-      const url = "http://hall-of-fame-server-hall-of-fame-server.linuxops-pune-a2.conygre.com/user/" + soeid;
+      const url = "https://hall-of-fame-server-hall-of-fame-server.linuxops-pune-a2.conygre.com/user/" + soeid;
       const getUser = () => {
         axios.get(url)
         .then(response => {

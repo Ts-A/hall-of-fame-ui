@@ -68,7 +68,7 @@ export default function Login() {
   const handleSignIn = (event) => {
     axios({
       method: 'POST',
-      url: "http://hall-of-fame-server-hall-of-fame-server.linuxops-pune-a2.conygre.com/user/login",
+      url: "https://hall-of-fame-server-hall-of-fame-server.linuxops-pune-a2.conygre.com/user/login",
       data : { 
         soe_id : soeid,
         password : password

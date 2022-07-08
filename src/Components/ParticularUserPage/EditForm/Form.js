@@ -64,7 +64,7 @@ export default function User() {
    
     let {soeid} = useParams();
     useEffect(() => {
-      const back_url = "http://hall-of-fame-server-hall-of-fame-server.linuxops-pune-a2.conygre.com/user/" + soeid;
+      const back_url = "https://hall-of-fame-server-hall-of-fame-server.linuxops-pune-a2.conygre.com/user/" + soeid;
       axios({
         method: 'GET',
         url: back_url
@@ -85,7 +85,7 @@ export default function User() {
     useEffect(() => {
       axios({
         method: 'GET',
-        url: "http://hall-of-fame-server-hall-of-fame-server.linuxops-pune-a2.conygre.com/question",
+        url: "https://hall-of-fame-server-hall-of-fame-server.linuxops-pune-a2.conygre.com/question",
       })
       .then(response => {
         console.log(response.data);
@@ -137,7 +137,7 @@ export default function User() {
     
       axios({
         method: 'POST',
-        url: "http://hall-of-fame-server-hall-of-fame-server.linuxops-pune-a2.conygre.com/answer/bulk_upload",
+        url: "https://hall-of-fame-server-hall-of-fame-server.linuxops-pune-a2.conygre.com/answer/bulk_upload",
         data : {answers : tempAnswers,
         },
         headers: {

@@ -76,7 +76,7 @@ export default function AllUsersPage() {
     const getUsers = () => {
       axios({
         method: 'GET',
-        url: "http://hall-of-fame-server-hall-of-fame-server.linuxops-pune-a2.conygre.com/user",
+        url: "https://hall-of-fame-server-hall-of-fame-server.linuxops-pune-a2.conygre.com/user",
         data : {  }
       })
       .then(response => {
